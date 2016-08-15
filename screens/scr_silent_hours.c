@@ -26,7 +26,7 @@ static void scr_hours_draw_hour2() {
 	  mlcd_draw_digit(light_hour2%10, 112, TIME_Y_POS, 28, 40, 4);
 }
 
-static void scr_changetime_draw_all() {
+static void scr_silent_hours_draw_all() {
 	  mlcd_draw_text(I18N_TRANSLATE(MESSAGE_SILENT_HOURS), 10, 10, MLCD_XRES-10, 40, FONT_OPTION_BIG, HORIZONTAL_ALIGN_LEFT | MULTILINE);
 	  fillRectangle(67, TIME_Y_POS + 18, 10, 4, DRAW_WHITE);
 	
@@ -41,7 +41,7 @@ static void scr_changetime_draw_all() {
 	  scr_hours_draw_hour2();
 }
 
-static void scr_changetime_handle_button_up(void) {
+static void scr_silent_hours_handle_button_up(void) {
 		if (change_mode == MODE_HOUR1) {
 			  if (++light_hour1 > 23) {
 					  light_hour1 = 0;
@@ -56,7 +56,7 @@ static void scr_changetime_handle_button_up(void) {
 	  mlcd_fb_flush();
 }
 
-static void scr_changetime_handle_button_down(void) {
+static void scr_silent_hours_handle_button_down(void) {
 	  if (change_mode == MODE_HOUR1) {
 			  if(--light_hour1 < 0) {
 					  light_hour1 = 23;
@@ -71,55 +71,56 @@ static void scr_changetime_handle_button_down(void) {
 	  mlcd_fb_flush();
 }
 
-static void scr_changetime_handle_button_select(void) {
-	  change_mode++;
-		change_mode %= 2;
-		mlcd_fb_clear();
-	  scr_changetime_draw_all();
-    mlcd_fb_flush();
+static void scr_silent_hours_handle_button_select(void) {
+	change_mode++;
+	change_mode %= 2;
+	mlcd_fb_clear();
+	scr_silent_hours_draw_all();
+  mlcd_fb_flush();
 }
 
-static void scr_changetime_handle_button_back(void) {
-		put_ext_ram_byte(EXT_RAM_SILENT_HOURS, light_hour1);
-		put_ext_ram_byte(EXT_RAM_SILENT_HOURS + 1, light_hour2);
-    scr_mngr_show_screen(SCR_SETTINGS);
+static void scr_silent_hours_handle_button_back(void) {
+	put_ext_ram_byte(EXT_RAM_SILENT_HOURS, light_hour1);
+	put_ext_ram_byte(EXT_RAM_SILENT_HOURS + 1, light_hour2);
+  scr_mngr_show_screen(SCR_SETTINGS);
+	check_bt_sleep();
 }
 
-static bool scr_changetime_handle_button_pressed(uint32_t event_type, uint32_t button_id) {
-	  switch (button_id) {
-			  case SCR_EVENT_PARAM_BUTTON_UP:
-					  scr_changetime_handle_button_up();
-				    return true;
-			  case SCR_EVENT_PARAM_BUTTON_DOWN:
-					  scr_changetime_handle_button_down();
-				    return true;
-			  case SCR_EVENT_PARAM_BUTTON_SELECT:
-						scr_changetime_handle_button_select();
-				    return true;
-			  case SCR_EVENT_PARAM_BUTTON_BACK:
-					  scr_changetime_handle_button_back();
-				    return true;
-		}
-		return false;
+static bool scr_silent_hours_handle_button_pressed(uint32_t event_type, uint32_t button_id) {
+	switch (button_id) {
+	  case SCR_EVENT_PARAM_BUTTON_UP:
+		  scr_silent_hours_handle_button_up();
+	    return true;
+	  case SCR_EVENT_PARAM_BUTTON_DOWN:
+		  scr_silent_hours_handle_button_down();
+	    return true;
+	  case SCR_EVENT_PARAM_BUTTON_SELECT:
+			scr_silent_hours_handle_button_select();
+	    return true;
+	  case SCR_EVENT_PARAM_BUTTON_BACK:
+		  scr_silent_hours_handle_button_back();
+	    return true;
+	}
+	return false;
 }
 
-static void scr_changetime_init() {
-		light_hour1 = get_ext_ram_byte(EXT_RAM_SILENT_HOURS);
-		light_hour2 = get_ext_ram_byte(EXT_RAM_SILENT_HOURS + 1);
-	  change_mode = MODE_HOUR1;
+static void scr_silent_hours_init() {
+	light_hour1 = get_ext_ram_byte(EXT_RAM_SILENT_HOURS);
+	light_hour2 = get_ext_ram_byte(EXT_RAM_SILENT_HOURS + 1);
+	change_mode = MODE_HOUR1;
 }
 
 bool scr_set_silent_hours_handle_event(uint32_t event_type, uint32_t event_param) {
-	  switch(event_type) {
-			  case SCR_EVENT_INIT_SCREEN:
-				    scr_changetime_init();
-				    return true;
-			  case SCR_EVENT_DRAW_SCREEN:
-						scr_changetime_draw_all();
-				    return true;
-			  case SCR_EVENT_BUTTON_PRESSED:
-			  case SCR_EVENT_BUTTON_LONG_PRESSED:
-				    return scr_changetime_handle_button_pressed(event_type, event_param);
-		}
-		return false;
+	switch(event_type) {
+		case SCR_EVENT_INIT_SCREEN:
+	    scr_silent_hours_init();
+	    return true;
+	  case SCR_EVENT_DRAW_SCREEN:
+			scr_silent_hours_draw_all();
+	    return true;
+	  case SCR_EVENT_BUTTON_PRESSED:
+	  case SCR_EVENT_BUTTON_LONG_PRESSED:
+	    return scr_silent_hours_handle_button_pressed(event_type, event_param);
+	}
+	return false;
 }

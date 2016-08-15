@@ -48,13 +48,26 @@ void rtc_tick_event(void * p_event_data, uint16_t event_size) {
 			if (get_settings(CONFIG_BT_SLEEP)) {
 				uint8_t hour = rtc_get_current_hour_24();
 				uint8_t hour1 = get_ext_ram_byte(EXT_RAM_SILENT_HOURS);
-				if (get_settings(CONFIG_BLUETOOTH) && hour == hour1)
+				bool bt_on = get_settings(CONFIG_BLUETOOTH);
+				if (bt_on && hour == hour1)
 					bluetooth_toggle();
 				uint8_t hour2 = get_ext_ram_byte(EXT_RAM_SILENT_HOURS + 1);
-				if (!get_settings(CONFIG_BLUETOOTH) && hour == hour2)
+				if (!bt_on && hour == hour2)
 					bluetooth_toggle();
 			}
 		}
+	}
+}
+
+void check_bt_sleep() {
+	if (get_settings(CONFIG_BT_SLEEP)) {
+		uint8_t hour = rtc_get_current_hour_24();
+		uint8_t hour1 = get_ext_ram_byte(EXT_RAM_SILENT_HOURS);
+		uint8_t hour2 = get_ext_ram_byte(EXT_RAM_SILENT_HOURS + 1);
+		bool bt_on = get_settings(CONFIG_BLUETOOTH);
+		bool in_sleep_interval = rtc_in_hour_interval(hour1, hour2);
+		if (bt_on == in_sleep_interval)
+			bluetooth_toggle();
 	}
 }
 

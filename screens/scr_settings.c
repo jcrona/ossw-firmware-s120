@@ -70,6 +70,7 @@ static void opt_handler_gtasks() {
 static void opt_handler_notifications() {
 	notifications_invoke_function(NOTIFICATIONS_FUNCTION_RESEND);
 }
+
 static void opt_handler_watch_faces() {
 	scr_mngr_show_screen_with_param(SCR_WATCH_SET_LIST, WATCH_SET_TYPE_WATCH_FACE);
 }
@@ -253,6 +254,7 @@ static void accelerometer_toggle() {
 
 static void bt_sleep_toggle() {
 	settings_toggle(CONFIG_BT_SLEEP);
+	check_bt_sleep();
 }
 
 static void central_mode_toggle() {

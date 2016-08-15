@@ -5,6 +5,7 @@
 #include "../notifications.h"
 #include "../mlcd_draw.h"
 #include "../mlcd.h"
+#include "../graph.h"
 #include "../ext_ram.h"
 #include "../utf8.h"
 #include "../config.h"
@@ -18,6 +19,9 @@
 #define SIZE_SUMMARY2_X MLCD_XRES/2-2*MARGIN_SUMMARY
 #define SIZE_SUMMARY2_Y MLCD_YRES/2-2*MARGIN_SUMMARY
 #define SUMMARY2_Y MLCD_YRES/4+MARGIN_SUMMARY
+
+#define MARGIN_LEFT 1
+#define MARGIN_TOP  12
 
 static bool scr_notifications_handle_button_pressed(uint32_t button_id) {
 	  switch (button_id) {
@@ -39,8 +43,7 @@ static bool scr_notifications_handle_button_pressed(uint32_t button_id) {
 				}
 				    return true;
 			  case SCR_EVENT_PARAM_BUTTON_DOWN:
-				{
-					
+				{					
 						uint16_t read_address = notifications_get_current_data();
 						uint8_t notification_type = get_next_byte(&read_address);
 	
@@ -110,9 +113,17 @@ static void scr_notifications_draw_screen() {
 						uint8_t page = get_next_byte(&read_address);
 						uint8_t font = get_next_byte(&read_address);
 						bool has_more = get_next_byte(&read_address);
-					
+
+						char msgs[4];
+						int msg_count = get_ext_ram_byte(EXT_RAM_MSG_COUNT);
+						if (msg_count == 0)
+							msg_count = 1;
+						sprintf(msgs, "%d", msg_count);
+						mlcd_draw_text(msgs, MLCD_XRES-30, 0, 24, MARGIN_TOP, FONT_SMALL_BOLD, HORIZONTAL_ALIGN_RIGHT);
+						hLine(MARGIN_TOP-1, 0, MLCD_XRES-1, DRAW_WHITE);
 						char* data_ptr = (char*)(0x80000000 + read_address);
-						mlcd_draw_text(data_ptr, 3, 3,  MLCD_XRES - 6, MLCD_YRES - 6, font, HORIZONTAL_ALIGN_LEFT | MULTILINE);
+						mlcd_draw_text(data_ptr, MARGIN_LEFT, MARGIN_TOP+1, MLCD_XRES-2*MARGIN_LEFT, MLCD_YRES - MARGIN_TOP,
+							font, HORIZONTAL_ALIGN_LEFT | MULTILINE);
 						if (get_settings(CONFIG_NOTIFICATION_LIGHT))
 								mlcd_backlight_short();
 				}
@@ -120,18 +131,11 @@ static void scr_notifications_draw_screen() {
 				case NOTIFICATIONS_CATEGORY_SUMMARY:
 				{
 						uint8_t notification_count = get_next_byte(&read_address);
-
-						if (notification_count < 10) {
-								mlcd_draw_digit(notification_count, MARGIN_SUMMARY, MARGIN_SUMMARY, SIZE_SUMMARY1_X, SIZE_SUMMARY1_Y, 11);
-						} else {
-								if (notification_count > 99) {
-										notification_count = 99;
-								}
-								mlcd_draw_digit(notification_count / 10U, MARGIN_SUMMARY, SUMMARY2_Y, SIZE_SUMMARY2_X, SIZE_SUMMARY2_Y, 11);
-								mlcd_draw_digit(notification_count % 10U, (MLCD_XRES>>1)+MARGIN_SUMMARY, SUMMARY2_Y, SIZE_SUMMARY2_X, SIZE_SUMMARY2_Y, 11);
-								if (get_settings(CONFIG_NOTIFICATION_LIGHT))
-										mlcd_backlight_short();
-						}
+						put_ext_ram_byte(EXT_RAM_MSG_COUNT, notification_count);
+						if (notification_count > 0)
+							notifications_invoke_function(NOTIFICATIONS_SHOW_FIRST);
+						else
+							scr_mngr_close_notifications();
 				}
 						break;
 		}

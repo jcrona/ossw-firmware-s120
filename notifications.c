@@ -194,6 +194,9 @@ void notifications_next_part(uint16_t notification_id, uint8_t current_part_no) 
 void notifications_next(uint16_t notification_id) {
 		uint8_t data[2] = {notification_id >> 8, notification_id&0xFF};
 		ble_peripheral_invoke_notification_function_with_data(NOTIFICATIONS_NEXT, data, 2);
+		int msg_count = get_ext_ram_byte(EXT_RAM_MSG_COUNT);
+		if (msg_count > 0)
+			put_ext_ram_byte(EXT_RAM_MSG_COUNT, msg_count-1);
 }
 
 uint16_t notifications_get_current_data(void) {

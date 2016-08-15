@@ -13,6 +13,7 @@ void rtc_timer_init(void);
 uint16_t rtc_get_refresh_interval(void);
 void rtc_set_refresh_interval(uint16_t new_interval);
 void rtc_toggle_refresh_interval(void);
+void check_bt_sleep(void);
 
 uint32_t rtc_get_current_time(void);
 void rtc_set_current_time(uint32_t);
