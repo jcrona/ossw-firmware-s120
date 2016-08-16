@@ -20,6 +20,7 @@
 #include "screens/dialog_option_text.h"
 #include "screens/dialog_select.h"
 #include "mlcd.h"
+#include "ext_ram.h"
 #include "stopwatch.h"
 #include "config.h"
 #include "watchset.h"
@@ -375,7 +376,8 @@ void scr_mngr_show_notifications() {
 }
 
 void scr_mngr_close_notifications() {
-	  scr_notifications_state = SCR_NOTIFICATIONS_STATE_CLOSE;
+	scr_notifications_state = SCR_NOTIFICATIONS_STATE_CLOSE;
+	put_ext_ram_byte(EXT_RAM_MSG_COUNT, 0);
 }
 
 uint8_t scr_mngr_current_screen(void) {
