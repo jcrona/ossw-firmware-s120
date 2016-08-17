@@ -389,11 +389,17 @@ void accel_interrupts_reset() {
 		reset_sleep();
 		accel_fifo_init();
 		interrupt |= 0x40;
+	} else {
+		accel_write_register(0x09, 0);
 	}
-	accel_tilt_init();
 	default_action* default_actions = config_get_default_global_actions();
-	if (default_actions[8].action_id)
+	if (default_actions[8].action_id) {
+		accel_tilt_init();
 		interrupt |= 0x10;
+	}	else {
+		accel_write_register(0x11, 0x80);
+	}
+		
 	//accel_motion_init();
 	//accel_transient_init();
 	//accel_pulse_init();
