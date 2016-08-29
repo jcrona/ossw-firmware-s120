@@ -79,6 +79,7 @@ static const I18N_MESSAGE messages_en[] = {
   /*   72 */{"Bluetooth"},
   /*   73 */{"BT sleep"},
   /*   74 */{"Central md"},
+  /*   75 */{"No new messages"},
 };
 
 #endif

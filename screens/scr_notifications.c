@@ -120,7 +120,7 @@ static void scr_notifications_draw_screen() {
 							msg_count = 1;
 						sprintf(msgs, "%d", msg_count);
 						mlcd_draw_text(msgs, MLCD_XRES-30, 0, 24, MARGIN_TOP, FONT_SMALL_BOLD, HORIZONTAL_ALIGN_RIGHT);
-						hLine(MARGIN_TOP-1, 0, MLCD_XRES-1, DRAW_WHITE);
+						hLine(MARGIN_TOP-2, 0, MLCD_XRES-1, DRAW_WHITE);
 						char* data_ptr = (char*)(0x80000000 + read_address);
 						mlcd_draw_text(data_ptr, MARGIN_LEFT, MARGIN_TOP+1, MLCD_XRES-2*MARGIN_LEFT, MLCD_YRES - MARGIN_TOP,
 							font, HORIZONTAL_ALIGN_LEFT | MULTILINE);
@@ -134,8 +134,10 @@ static void scr_notifications_draw_screen() {
 						put_ext_ram_byte(EXT_RAM_MSG_COUNT, notification_count);
 						if (notification_count > 0)
 							notifications_invoke_function(NOTIFICATIONS_SHOW_FIRST);
-						else
-							scr_mngr_close_notifications();
+						else {
+							mlcd_draw_text(I18N_TRANSLATE(MESSAGE_NO_MESSAGES), 0, MLCD_YRES/2-30, MLCD_XRES, 60, FONT_OPTION_BIG, HORIZONTAL_ALIGN_CENTER | MULTILINE);
+//							scr_mngr_close_notifications();
+						}
 				}
 						break;
 		}

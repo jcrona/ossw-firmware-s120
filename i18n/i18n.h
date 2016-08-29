@@ -57,6 +57,7 @@
 #define MESSAGE_BLUETOOTH					72
 #define MESSAGE_BT_SLEEP					73
 #define MESSAGE_CENTRAL_MODE			74
+#define MESSAGE_NO_MESSAGES				75
 
 typedef struct
 {
