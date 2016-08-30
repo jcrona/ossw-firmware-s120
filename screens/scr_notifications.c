@@ -13,13 +13,6 @@
 #include "../ble/ble_peripheral.h"
 #include <stdlib.h> 
 
-#define MARGIN_SUMMARY 20
-#define SIZE_SUMMARY1_X MLCD_XRES-2*MARGIN_SUMMARY
-#define SIZE_SUMMARY1_Y MLCD_YRES-2*MARGIN_SUMMARY
-#define SIZE_SUMMARY2_X MLCD_XRES/2-2*MARGIN_SUMMARY
-#define SIZE_SUMMARY2_Y MLCD_YRES/2-2*MARGIN_SUMMARY
-#define SUMMARY2_Y MLCD_YRES/4+MARGIN_SUMMARY
-
 #define MARGIN_LEFT 1
 #define MARGIN_TOP  12
 
@@ -114,15 +107,15 @@ static void scr_notifications_draw_screen() {
 						uint8_t font = get_next_byte(&read_address);
 						bool has_more = get_next_byte(&read_address);
 
-						char msgs[4];
 						int msg_count = get_ext_ram_byte(EXT_RAM_MSG_COUNT);
 						if (msg_count == 0)
 							msg_count = 1;
-						sprintf(msgs, "%d", msg_count);
-						mlcd_draw_text(msgs, MLCD_XRES-30, 0, 24, MARGIN_TOP, FONT_SMALL_BOLD, HORIZONTAL_ALIGN_RIGHT);
-						hLine(MARGIN_TOP-2, 0, MLCD_XRES-1, DRAW_WHITE);
+						if (msg_count > 9)
+							mlcd_draw_digit(msg_count/10, MLCD_XRES-22, 0, 6, 10, 2);
+						mlcd_draw_digit(msg_count%10, MLCD_XRES-14, 0, 6, 10, 2);
+						hLine(MARGIN_TOP-1, 0, MLCD_XRES-1, DRAW_WHITE);
 						char* data_ptr = (char*)(0x80000000 + read_address);
-						mlcd_draw_text(data_ptr, MARGIN_LEFT, MARGIN_TOP+1, MLCD_XRES-2*MARGIN_LEFT, MLCD_YRES - MARGIN_TOP,
+						mlcd_draw_text(data_ptr, MARGIN_LEFT, MARGIN_TOP, MLCD_XRES-2*MARGIN_LEFT, MLCD_YRES - MARGIN_TOP,
 							font, HORIZONTAL_ALIGN_LEFT | MULTILINE);
 						if (get_settings(CONFIG_NOTIFICATION_LIGHT))
 								mlcd_backlight_short();
