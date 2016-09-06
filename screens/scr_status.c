@@ -7,6 +7,8 @@
 #include "../graph.h"
 #include "../i18n/i18n.h"
 #include "../battery.h"
+#include "../rtc.h"
+#include "../ext_ram.h"
 #include "../scr_controls.h"
 #include "../ossw.h"
 #include "../fs.h"
@@ -14,6 +16,7 @@
 
 static NUMBER_CONTROL_DATA battery_level_ctrl_data;
 static uint8_t mode = 0;
+static const int font = FONT_NORMAL_BOLD;
 
 static const SCR_CONTROL_PROGRESS_BAR_CONFIG battery_level_config = {
 	  35,
@@ -48,11 +51,11 @@ static bool scr_status_handle_button_pressed(uint32_t button_id) {
 static void scr_status_draw_battery_status() {
 		fillRectangle(0, 25, MLCD_XRES, 20, DRAW_BLACK);
 		if (mode == 1) {
-				mlcd_draw_text("charging", 0, 25, MLCD_XRES, 20, FONT_OPTION_NORMAL, HORIZONTAL_ALIGN_CENTER);
+				mlcd_draw_text(I18N_TRANSLATE(MESSAGE_CHARGING), 0, 25, MLCD_XRES, 20, font, HORIZONTAL_ALIGN_CENTER);
 		} else if (mode == 2) {
-				mlcd_draw_text("full", 0, 25, MLCD_XRES, 20, FONT_OPTION_NORMAL, HORIZONTAL_ALIGN_CENTER);
+				mlcd_draw_text(I18N_TRANSLATE(MESSAGE_BATTERY_FULL), 0, 25, MLCD_XRES, 20, font, HORIZONTAL_ALIGN_CENTER);
 		} else {
-				mlcd_draw_text("battery", 0, 25, MLCD_XRES, 20, FONT_OPTION_NORMAL, HORIZONTAL_ALIGN_CENTER);
+				mlcd_draw_text(I18N_TRANSLATE(MESSAGE_BATTERY), 0, 25, MLCD_XRES, 20, font, HORIZONTAL_ALIGN_CENTER);
 		}
 }
 
@@ -78,8 +81,14 @@ static void scr_status_draw_screen() {
 		fillRectangle(109, 60, 6, 12, DRAW_WHITE);
 		mode = battery_is_charging()? (battery_is_full() ? 2 : 1) : 0;
 		scr_status_draw_battery_status();
-							
-		mlcd_draw_text(ossw_mac_address(), 0, 110, MLCD_XRES, NULL, FONT_OPTION_NORMAL, HORIZONTAL_ALIGN_CENTER);
+
+		int32_t days = (rtc_get_current_time()-get_ext_ram_int(EXT_RAM_LAST_CHARGE))/(24*3600);
+		if (days > -1 && days < 100) {
+			char days_str [20];
+			snprintf(days_str, 20, I18N_TRANSLATE(MESSAGE_DAYS_ON_BATTERY), days);
+			mlcd_draw_text(days_str, 0, 96, MLCD_XRES, NULL, font, HORIZONTAL_ALIGN_CENTER);
+		}
+		mlcd_draw_text(ossw_mac_address(), 0, 114, MLCD_XRES, NULL, font, HORIZONTAL_ALIGN_CENTER);
 	
 		// Check hardware ID, how compatible with other SoftDevices
 		// ex. 004D is for 2nd rev, WLCSP, 256kB/16kB 
@@ -91,8 +100,8 @@ static void scr_status_draw_screen() {
 				id[9-i] = hex_str[hwid & 0x000F];
 				hwid = hwid >> 4;
 		}
-		mlcd_draw_text(id, 0, 130, MLCD_XRES, NULL, FONT_OPTION_NORMAL, HORIZONTAL_ALIGN_CENTER);
-  	mlcd_draw_text(ossw_firmware_version(), 0, 150, MLCD_XRES, NULL, FONT_OPTION_NORMAL, HORIZONTAL_ALIGN_CENTER);
+		mlcd_draw_text(id, 0, 132, MLCD_XRES, NULL, font, HORIZONTAL_ALIGN_CENTER);
+  	mlcd_draw_text(ossw_firmware_version(), 0, 150, MLCD_XRES, NULL, font, HORIZONTAL_ALIGN_CENTER);
 		
 		scr_controls_draw(&controls_definition);
 }

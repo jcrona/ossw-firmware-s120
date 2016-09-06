@@ -4,6 +4,8 @@
 #include "nrf_adc.h"
 #include "nrf_drv_gpiote.h"
 #include "board.h"
+#include "ext_ram.h"
+#include "rtc.h"
 #include "scr_mngr.h"
 
 #define NRF_ADC_CONFIG { NRF_ADC_CONFIG_RES_8BIT,               \
@@ -15,13 +17,17 @@
 																 
 static void battery_event_handler(nrf_drv_gpiote_pin_t pin, nrf_gpiote_polarity_t action)
 {
-		if (BATTERY_CHARGING_INT_PIN == pin) {
-				if (!nrf_drv_gpiote_in_is_set(BATTERY_CHARGING_INT_PIN)) {
-						scr_mngr_show_screen(SCR_STATUS);
-				} else {
-						scr_mngr_show_screen(SCR_WATCHFACE);
-				}
+	if (BATTERY_CHARGING_INT_PIN == pin) {
+		if (battery_is_charging()) {
+			scr_mngr_show_screen(SCR_STATUS);
+		} else {
+			scr_mngr_show_screen(SCR_WATCHFACE);
 		}
+	} else if (BATTERY_FULLY_CHARGED_INT_PIN == pin) {
+		if (battery_is_full()) {
+			put_ext_ram_int(EXT_RAM_LAST_CHARGE, rtc_get_current_time());
+		}
+	}
 }
 																 
 static uint32_t battery_int_init(uint8_t pin_no, nrf_gpio_pin_pull_t pull, nrf_drv_gpiote_evt_handler_t event_handler)

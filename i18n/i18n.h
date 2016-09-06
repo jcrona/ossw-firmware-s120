@@ -58,6 +58,10 @@
 #define MESSAGE_BT_SLEEP					73
 #define MESSAGE_CENTRAL_MODE			74
 #define MESSAGE_NO_MESSAGES				75
+#define MESSAGE_BATTERY						76
+#define MESSAGE_CHARGING					77
+#define MESSAGE_BATTERY_FULL			78
+#define MESSAGE_DAYS_ON_BATTERY		79
 
 typedef struct
 {

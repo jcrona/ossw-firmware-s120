@@ -80,6 +80,10 @@ static const I18N_MESSAGE messages_en[] = {
   /*   73 */{"BT sleep"},
   /*   74 */{"Central md"},
   /*   75 */{"No new messages"},
+  /*   76 */{"Battery"},
+  /*   77 */{"Charging"},
+  /*   78 */{"Full"},
+  /*   79 */{"%d days on charge"},
 };
 
 #endif
