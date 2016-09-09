@@ -113,7 +113,7 @@ static void scr_notifications_draw_screen() {
 						if (msg_count > 9)
 							mlcd_draw_digit(msg_count/10, MLCD_XRES-22, 0, 6, 10, 2);
 						mlcd_draw_digit(msg_count%10, MLCD_XRES-14, 0, 6, 10, 2);
-						hLine(MARGIN_TOP-1, 0, MLCD_XRES-1, DRAW_WHITE);
+						//hLine(MARGIN_TOP-1, 0, MLCD_XRES-1, DRAW_WHITE);
 						char* data_ptr = (char*)(0x80000000 + read_address);
 						mlcd_draw_text(data_ptr, MARGIN_LEFT, MARGIN_TOP, MLCD_XRES-2*MARGIN_LEFT, MLCD_YRES - MARGIN_TOP,
 							font, HORIZONTAL_ALIGN_LEFT | MULTILINE);
