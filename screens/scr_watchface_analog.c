@@ -57,15 +57,6 @@ static void scr_watchface_draw() {
 		radialRect(CENTER_X, CENTER_Y, 30*h+(m>>1), HOUR_L1, HOUR_L2, 7, DRAW_XOR);
 }
 
-static bool scr_analog_handle_button_pressed(uint32_t button_id) {
-	  switch (button_id) {
-			  case SCR_EVENT_PARAM_BUTTON_BACK:
-					  scr_mngr_show_screen(SCR_STATUS);
-				    return true;
-		}
-		return false;
-}
-
 bool scr_watchface_analog_handle_event(uint32_t event_type, uint32_t event_param) {
     switch(event_type) {
         case SCR_EVENT_INIT_SCREEN:
@@ -78,8 +69,10 @@ bool scr_watchface_analog_handle_event(uint32_t event_type, uint32_t event_param
             scr_watchface_refresh_time();
             return true;
 			  case SCR_EVENT_BUTTON_PRESSED:
-				    if (scr_analog_handle_button_pressed(event_param))
-								return true;
+				    if (event_param == SCR_EVENT_PARAM_BUTTON_BACK) {
+							scr_mngr_show_screen(SCR_STATUS);
+							return true;
+						}
     }
 		return watchset_default_watch_face_handle_event(event_type, event_param);
 }

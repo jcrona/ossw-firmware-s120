@@ -29,6 +29,8 @@ static void config_load_global_actions(void) {
 
 static void config_reset_global_actions(void) {
 		memset(default_global_actions, 0, sizeof(default_global_actions));
+		default_global_actions[3].action_id = WATCH_SET_FUNC_SHOW_NEXT_WATCH_FACE;
+		default_global_actions[5].action_id = WATCH_SET_FUNC_SHOW_SETTINGS;
 		default_global_actions[7].action_id = WATCH_SET_FUNC_TOGGLE_BACKLIGHT;
 		default_global_actions[8].action_id = WATCH_SET_FUNC_TEMPORARY_BACKLIGHT;
 		config_store_global_actions();

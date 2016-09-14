@@ -39,15 +39,6 @@ static const SCR_CONTROLS_DEFINITION controls_definition = {
 	  (SCR_CONTROL_DEFINITION*)controls
 };
 
-static bool scr_status_handle_button_pressed(uint32_t button_id) {
-	  switch (button_id) {
-			  case SCR_EVENT_PARAM_BUTTON_BACK:
-					  watchset_async_operation(WATCH_SET_OPERATION_NEXT_WATCH_FACE, 0);
-				    return true;
-		}
-		return false;
-}
-
 static void scr_status_draw_battery_status() {
 		fillRectangle(0, 25, MLCD_XRES, 20, DRAW_BLACK);
 		if (mode == 1) {
@@ -118,8 +109,10 @@ bool scr_status_handle_event(uint32_t event_type, uint32_t event_param) {
             scr_status_refresh_screen();
             return true;
 			  case SCR_EVENT_BUTTON_PRESSED:
-				    if (scr_status_handle_button_pressed(event_param))
-								return true;
+				    if (event_param == SCR_EVENT_PARAM_BUTTON_BACK) {
+							watchset_async_operation(WATCH_SET_OPERATION_NEXT_WATCH_FACE, 0);
+							return true;
+						}
 		}
 		return watchset_default_watch_face_handle_event(event_type, event_param);
 }
