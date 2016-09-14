@@ -219,6 +219,9 @@ void watchset_invoke_internal_function(uint8_t function_id, uint32_t param) {
 			  case WATCH_SET_FUNC_SHOW_STATUS:
 				    scr_mngr_show_screen(SCR_STATUS);
 			      break;
+			  case WATCH_SET_FUNC_SHOW_ANALOG:
+				    scr_mngr_show_screen(SCR_WATCHFACE_ANALOG);
+			      break;
 			  case WATCH_SET_FUNC_SHOW_WATCH_FACES:
             scr_mngr_show_screen_with_param(SCR_WATCH_SET_LIST, WATCH_SET_TYPE_WATCH_FACE);
 			      break;

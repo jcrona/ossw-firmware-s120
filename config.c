@@ -47,7 +47,7 @@ static void config_reset_watchface_actions(void) {
 		default_watchface_actions[0].action_id = WATCH_SET_FUNC_SHOW_NOTIFICATIONS;
 		default_watchface_actions[1].action_id = WATCH_SET_FUNC_SHOW_APPLICATIONS;
 		default_watchface_actions[2].action_id = WATCH_SET_FUNC_SHOW_NEXT_WATCH_FACE;
-		default_watchface_actions[3].action_id = WATCH_SET_FUNC_SHOW_STATUS;
+		default_watchface_actions[3].action_id = WATCH_SET_FUNC_SHOW_ANALOG;
 		default_watchface_actions[4].action_id = WATCH_SET_FUNC_SHOW_WATCH_FACES;
 		default_watchface_actions[5].action_id = WATCH_SET_FUNC_SHOW_SETTINGS;
 		default_watchface_actions[6].action_id = WATCH_SET_FUNC_SHOW_UTILS;

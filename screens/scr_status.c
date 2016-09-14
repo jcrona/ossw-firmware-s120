@@ -42,7 +42,7 @@ static const SCR_CONTROLS_DEFINITION controls_definition = {
 static bool scr_status_handle_button_pressed(uint32_t button_id) {
 	  switch (button_id) {
 			  case SCR_EVENT_PARAM_BUTTON_BACK:
-					  scr_mngr_show_screen(SCR_WATCHFACE_ANALOG);
+					  watchset_async_operation(WATCH_SET_OPERATION_NEXT_WATCH_FACE, 0);
 				    return true;
 		}
 		return false;

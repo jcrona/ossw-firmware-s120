@@ -60,7 +60,7 @@ static void scr_watchface_draw() {
 static bool scr_analog_handle_button_pressed(uint32_t button_id) {
 	  switch (button_id) {
 			  case SCR_EVENT_PARAM_BUTTON_BACK:
-					  scr_mngr_show_screen(SCR_WATCHFACE);
+					  scr_mngr_show_screen(SCR_STATUS);
 				    return true;
 		}
 		return false;
