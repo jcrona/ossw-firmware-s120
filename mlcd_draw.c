@@ -27,12 +27,12 @@ static uint_fast8_t draw_digit_func(uint_fast8_t x, uint_fast8_t y) {
 				}	
 		}
 		if(mask & 0x2) {
-				if(x >= draw_width-draw_thickness && y < draw_height/2) {
+				if(x >= draw_width-draw_thickness && y < (draw_height >> 1)) {
 						return 1;
 				}
 		}
 		if(mask & 0x4) {
-				if(x >= draw_width-draw_thickness && y >= draw_height/2) {
+				if(x >= draw_width-draw_thickness && y >= (draw_height >> 1)) {
 						return 1;
 				}
 		}
@@ -42,17 +42,17 @@ static uint_fast8_t draw_digit_func(uint_fast8_t x, uint_fast8_t y) {
 				}
 		}
 		if(mask & 0x10) {
-				if(x < draw_thickness && y >= draw_height/2) {
+				if(x < draw_thickness && y >= (draw_height >> 1)) {
 						return 1;
 				}
 		}
 		if(mask & 0x20) {
-				if(x < draw_thickness && y < draw_height/2) {
+				if(x < draw_thickness && y < (draw_height >> 1)) {
 						return 1;
 				}
 		}
 		if(mask & 0x40) {
-				if(y >= (draw_height - draw_thickness)/2 && y < (draw_height + draw_thickness)/2) {
+				if(y >= (draw_height - draw_thickness) >> 1 && y < (draw_height + draw_thickness) >> 1) {
 						return 1;
 				}
 		}
@@ -146,7 +146,7 @@ void mlcd_draw_arrow_up(uint_fast8_t x_pos, uint_fast8_t y_pos, uint_fast8_t wid
 	  mlcd_fb_draw_with_func(draw_arrow_down_func, x_pos, y_pos, width, height);
 }
 
-static const FONT_CHAR_INFO* resolve_char_info(uint32_t c, const FONT_INFO* font) {
+static inline const FONT_CHAR_INFO* resolve_char_info(uint32_t c, const FONT_INFO* font) {
    if ((c < font->startChar) || (c > font->endChar)) 
       return NULL; 
 
@@ -166,7 +166,7 @@ static const FONT_CHAR_INFO* resolve_char_info(uint32_t c, const FONT_INFO* font
 	 return charInfo;
 }
 
-static uint_fast8_t mlcd_draw_char(uint32_t c, uint_fast8_t x, uint_fast8_t y, uint_fast8_t width, uint_fast8_t height, const FONT_INFO* font){
+static inline uint_fast8_t mlcd_draw_char(uint32_t c, uint_fast8_t x, uint_fast8_t y, uint_fast8_t width, uint_fast8_t height, const FONT_INFO* font){
 	 if (c == ' ') {
 	     return font->spaceWidth;
 	 }
@@ -207,17 +207,15 @@ const FONT_INFO* mlcd_resolve_font(uint_fast8_t font_type) {
 	 return &normalRegularFontInfo;
 }
 
-static uint_fast8_t calc_char_width(uint32_t c, const FONT_INFO* font) {
-		if (c == ' ') {
-	      return font->spaceWidth;
-		}
-		const FONT_CHAR_INFO *charInfo = resolve_char_info(c, font);
-		uint8_t width = 0;
-		if (charInfo == NULL) {
-				return font->spaceWidth;
-		}	
-		width += charInfo->width;	
-		return width;
+static inline uint_fast8_t calc_char_width(uint32_t c, const FONT_INFO* font) {
+	if (c == ' ')
+	  return font->spaceWidth;
+
+	const FONT_CHAR_INFO *charInfo = resolve_char_info(c, font);
+	if (charInfo == NULL)
+		return font->spaceWidth;
+	else
+		return charInfo->width;	
 }
 
 static inline bool is_new_line(int c) {
@@ -280,7 +278,7 @@ uint_fast8_t mlcd_calc_text_height(const char *text, uint_fast8_t start_x, uint_
 		bool last_line;
 		int tmp_ptr;
 		do {
-				last_line = !multiline || (y + 2 * font->height + font->charDist > max_y);
+				last_line = !multiline || (y + (font->height << 1) + font->charDist > max_y);
 				tmp_ptr = ptr;
 				uint8_t text_width = calc_text_width(text, &tmp_ptr, font_type, split_word || !multiline, width);
 				uint8_t max_x = x + text_width;
@@ -309,7 +307,7 @@ uint_fast8_t mlcd_calc_text_height(const char *text, uint_fast8_t start_x, uint_
 				x = start_x;
 				y += font->height;
 				if(!last_line) {
-						y += (c==11 ? font->height/2 : font->charDist);
+						y += (c==11 ? (font->height >> 1) : font->charDist);
 				}
 		} while(!last_line);
 				
@@ -339,7 +337,7 @@ uint_fast8_t mlcd_draw_text(const char *text, uint_fast8_t start_x, uint_fast8_t
 		if (font_alignment & VERTICAL_ALIGN_CENTER) {
 				int calc_height = mlcd_calc_text_height(text, start_x, start_y, width, height, font_type, font_alignment);
 				if (calc_height < height) {
-						y += (height-calc_height)/2;
+						y += (height-calc_height) >> 1;
 				}
 		} else if (font_alignment & VERTICAL_ALIGN_BOTTOM) {
 				int calc_height = mlcd_calc_text_height(text, start_x, start_y, width, height, font_type, font_alignment);
@@ -350,12 +348,12 @@ uint_fast8_t mlcd_draw_text(const char *text, uint_fast8_t start_x, uint_fast8_t
 		bool last_line;
 		int tmp_ptr;
 		do {
-				last_line = !multiline || (y + 2 * font->height + font->charDist > max_y);
+				last_line = !multiline || (y + (font->height << 1) + font->charDist > max_y);
 				tmp_ptr = ptr;
 				uint8_t text_width = calc_text_width(text, &tmp_ptr, font_type, split_word || !multiline, width);
 				if (font_alignment & HORIZONTAL_ALIGN_CENTER) {
 						if (text_width < width) {
-								x += (width - text_width)/2;
+								x += (width - text_width) >> 1;
 						}
 				} else if (font_alignment & HORIZONTAL_ALIGN_RIGHT) {
 						if (text_width < width) {
@@ -390,7 +388,7 @@ uint_fast8_t mlcd_draw_text(const char *text, uint_fast8_t start_x, uint_fast8_t
 					fillRectangle(start_x, y+font->height-2, x-start_x, 2, DRAW_WHITE);
 				
 				x = start_x;
-				y += font->height + (c==11 ? font->height/2 : font->charDist);
+				y += font->height + (c==11 ? (font->height >> 1) : font->charDist);
 		} while(!last_line);
 				
 		return 0;
