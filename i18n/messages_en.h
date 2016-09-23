@@ -83,7 +83,7 @@ static const I18N_MESSAGE messages_en[] = {
   /*   76 */{"Battery"},
   /*   77 */{"Charging"},
   /*   78 */{"Full"},
-  /*   79 */{"%d days on charge"},
+  /*   79 */{"%dd %dh on charge"},
 };
 
 #endif
