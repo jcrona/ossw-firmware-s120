@@ -2179,14 +2179,14 @@ const FONT_CHAR_INFO_LOOKUP bigBoldBlockLookup[] =
 
 const FONT_INFO bigBoldFontInfo =
 {
-	20, //  Character height
+	bigBoldBlockLookup, //  Character descriptor array
+	bigBoldFontBitmaps, //  Character bitmap array
 	'!', //  Start character
 	'~', //  End character
+	20, //  Character height
 	1,
 	2, 
-	bigBoldBlockLookup, //  Character descriptor array
 	1,
-	bigBoldFontBitmaps, //  Character bitmap array
 };
 
 #endif /* BIG_BOLD_FONT_H */
