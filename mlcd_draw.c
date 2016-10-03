@@ -278,7 +278,7 @@ uint_fast8_t mlcd_calc_text_height(const char *text, uint_fast8_t start_x, uint_
 		bool last_line;
 		int tmp_ptr;
 		do {
-				last_line = !multiline || (y + (font->height << 1) + font->charDist > max_y);
+				last_line = !multiline || (y + (font->height << 1) > max_y);
 				tmp_ptr = ptr;
 				uint8_t text_width = calc_text_width(text, &tmp_ptr, font_type, split_word || !multiline, width);
 				uint8_t max_x = x + text_width;
@@ -307,7 +307,7 @@ uint_fast8_t mlcd_calc_text_height(const char *text, uint_fast8_t start_x, uint_
 				x = start_x;
 				y += font->height;
 				if(!last_line) {
-						y += (c==11 ? (font->height >> 1) : font->charDist);
+						y += (c==11 ? (font->height >> 1) : 0);
 				}
 		} while(!last_line);
 				
@@ -348,7 +348,7 @@ uint_fast8_t mlcd_draw_text(const char *text, uint_fast8_t start_x, uint_fast8_t
 		bool last_line;
 		int tmp_ptr;
 		do {
-				last_line = !multiline || (y + (font->height << 1) + font->charDist > max_y);
+				last_line = !multiline || (y + (font->height << 1) > max_y);
 				tmp_ptr = ptr;
 				uint8_t text_width = calc_text_width(text, &tmp_ptr, font_type, split_word || !multiline, width);
 				if (font_alignment & HORIZONTAL_ALIGN_CENTER) {
@@ -388,7 +388,7 @@ uint_fast8_t mlcd_draw_text(const char *text, uint_fast8_t start_x, uint_fast8_t
 					fillRectangle(start_x, y+font->height-2, x-start_x, 2, DRAW_WHITE);
 				
 				x = start_x;
-				y += font->height + (c==11 ? (font->height >> 1) : font->charDist);
+				y += font->height + (c==11 ? (font->height >> 1) : 0);
 		} while(!last_line);
 				
 		return 0;
