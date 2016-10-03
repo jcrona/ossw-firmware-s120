@@ -61,11 +61,11 @@ static void scr_status_init(void) {
 }
 
 static void scr_status_draw_time_on_charge() {
-	int32_t time_delta = rtc_get_current_time()-get_ext_ram_int(EXT_RAM_LAST_CHARGE);
-	int32_t days = time_delta/(24*3600);
-	if (days > -1 && days < 100) {
+	uint32_t hours = (rtc_get_current_time()-get_ext_ram_int(EXT_RAM_LAST_CHARGE))/3600;
+	uint32_t days = hours/24;
+	if (days < 100) {
 		char days_str[20];
-		snprintf(days_str, 20, I18N_TRANSLATE(MESSAGE_DAYS_ON_BATTERY), days, time_delta/3600-24*days);
+		snprintf(days_str, 20, I18N_TRANSLATE(MESSAGE_DAYS_ON_BATTERY), days, hours%24);
 		fillRectangle(0, 88, MLCD_XRES, 16, DRAW_BLACK);
 		mlcd_draw_text(days_str, 0, 88, MLCD_XRES, NULL, FONT, HORIZONTAL_ALIGN_CENTER);
 	}
