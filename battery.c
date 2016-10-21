@@ -21,12 +21,10 @@ static void battery_event_handler(nrf_drv_gpiote_pin_t pin, nrf_gpiote_polarity_
 		if (battery_is_charging()) {
 			scr_mngr_show_screen(SCR_STATUS);
 		} else {
-			scr_mngr_show_screen(SCR_WATCHFACE);
+//			scr_mngr_show_screen(SCR_WATCHFACE);
 		}
 	} else if (BATTERY_FULLY_CHARGED_INT_PIN == pin) {
-		if (battery_is_full()) {
-			put_ext_ram_int(EXT_RAM_LAST_CHARGE, rtc_get_current_time());
-		}
+		put_ext_ram_int(EXT_RAM_LAST_CHARGE, rtc_get_current_time());
 	}
 }
 																 
