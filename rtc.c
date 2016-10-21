@@ -45,16 +45,7 @@ void rtc_tick_event(void * p_event_data, uint16_t event_size) {
 				vibration_vibrate(OCLOCK_PATTERN, 0x0100, false);
 			if (rtc_get_current_minutes()%10 == 0 && get_settings(CONFIG_BLUETOOTH) && !get_settings(CONFIG_CENTRAL_MODE))
 				battery_level_update();
-			if (get_settings(CONFIG_BT_SLEEP)) {
-				uint8_t hour = rtc_get_current_hour_24();
-				uint8_t hour1 = get_ext_ram_byte(EXT_RAM_SILENT_HOURS);
-				bool bt_on = get_settings(CONFIG_BLUETOOTH);
-				if (bt_on && hour == hour1)
-					bluetooth_toggle();
-				uint8_t hour2 = get_ext_ram_byte(EXT_RAM_SILENT_HOURS + 1);
-				if (!bt_on && hour == hour2)
-					bluetooth_toggle();
-			}
+			check_bt_sleep();
 		}
 	}
 }
@@ -76,12 +67,6 @@ static void rtc_timeout_handler(void * p_context) {
 	APP_ERROR_CHECK(err_code);
 }
 
-static uint32_t rtc_load_time(void) {
-	uint8_t buffer[4];
-	ext_ram_read_data(EXT_RAM_DATA_RTC, buffer, 4);
-	return (uint32_t)(((uint32_t)buffer[3] << 24) | ((uint32_t)buffer[2] << 16) | ((uint32_t)buffer[1] << 8) | buffer[0]);
-}
-
 void rtc_toggle_refresh_interval() {
 	if (rtc_refresh_interval == RTC_INTERVAL_MINUTE)
 		rtc_set_refresh_interval(RTC_INTERVAL_SECOND);
@@ -90,7 +75,7 @@ void rtc_toggle_refresh_interval() {
 }
 
 void rtc_timer_init(void) {
-	  current_time = rtc_load_time();
+	  current_time = get_ext_ram_int(EXT_RAM_DATA_RTC);
 		if (current_time == 0) {
 			  // set initial time
 			  current_time = 1430141820;
@@ -117,7 +102,7 @@ void rtc_set_refresh_interval(uint16_t new_interval) {
 }
 
 uint32_t rtc_get_current_time(void) {
-	  return current_time;
+	return current_time;
 }
 
 uint32_t rtc_get_current_time_in_seconds(void) {
@@ -177,24 +162,23 @@ uint32_t rtc_get_current_year(void) {
 }
 
 void rtc_set_current_time(uint32_t new_time) {
-		if (new_time != current_time) {
-				current_time = new_time;
-				store_time = true;
-		}
+	if (new_time != current_time) {
+		// shift the last charging time with the main RTC
+		uint32_t last = get_ext_ram_int(EXT_RAM_LAST_CHARGE);
+		put_ext_ram_int(EXT_RAM_LAST_CHARGE, last - current_time + new_time);
+		
+		current_time = new_time;
+		store_time = true;
+	}
 }
 
 void rtc_store_current_time(void) {
-		uint8_t buffer[4];
-		buffer[0] = current_time;
-		buffer[1] = current_time >>  8;
-		buffer[2] = current_time >> 16;
-		buffer[3] = current_time >> 24;
-		ext_ram_write_data(EXT_RAM_DATA_RTC, buffer, 4);
-	  store_time = false;
+	put_ext_ram_int(EXT_RAM_DATA_RTC, current_time);
+	store_time = false;
 }
 
 bool rtc_should_store_current_time(void) {
-	  return store_time;
+	return store_time;
 }
 
 _ARMABI time_t time(time_t * tp) {
@@ -205,7 +189,7 @@ _ARMABI time_t time(time_t * tp) {
     return current_time; 
 }
 
-bool rtc_in_hour_interval(uint8_t h1, uint8_t h2) {
+bool inline rtc_in_hour_interval(uint8_t h1, uint8_t h2) {
 	uint8_t curr = rtc_get_current_hour_24();
 	return ((h1 <= curr && curr < h2) || (h2 < h1 && (curr < h2 || h1 <= curr)));
 }
