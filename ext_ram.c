@@ -73,7 +73,7 @@ void put_ext_ram_byte(uint16_t address, uint8_t value) {
 uint16_t get_ext_ram_short(uint16_t address) {
 	uint8_t data[2];
 	ext_ram_read_data(address, data, 2);
-	return data[0] << 8 | data[1];
+	return (uint16_t)data[0] << 8 | (uint16_t)data[1];
 }
 
 void put_ext_ram_short(uint16_t address, uint16_t value) {
@@ -86,12 +86,13 @@ void put_ext_ram_short(uint16_t address, uint16_t value) {
 uint32_t get_ext_ram_int(uint16_t address) {
 	uint8_t data[4];
 	ext_ram_read_data(address, data, 4);
-	return data[0] << 24 | data[1] << 16 | data[2] << 8 | data[3];
+	return (uint32_t)data[0] << 24 | (uint32_t)data[1] << 16 |
+		(uint32_t)data[2] << 8 | (uint32_t)data[3];
 }
 
 void put_ext_ram_int(uint16_t address, uint32_t value) {
 	uint8_t data[4];
-	data[0] = value >> 24;
+	data[0] = value >> 24 & 0xFF;
 	data[1] = value >> 16 & 0xFF;
 	data[2] = value >> 8 & 0xFF;
 	data[3] = value & 0xFF;
