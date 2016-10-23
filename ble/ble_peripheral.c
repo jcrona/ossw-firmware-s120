@@ -98,7 +98,8 @@ static void ossw_data_handler(ble_ossw_t * p_ossw, uint8_t * p_data, uint16_t le
 					break;
 		 case 0x10:
 			    // set current time
-					rtc_set_current_time((p_data[1]<<24) | (p_data[2]<<16) | (p_data[3]<<8) | p_data[4]);
+					rtc_set_current_time(((uint32_t)p_data[1]<<24) | ((uint32_t)p_data[2]<<16)
+						| ((uint32_t)p_data[3]<<8) | (uint32_t)p_data[4]);
 					break; 
 		 case 0x40:
 					// command first part
