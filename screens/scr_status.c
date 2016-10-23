@@ -61,14 +61,17 @@ static void scr_status_init(void) {
 }
 
 static void scr_status_draw_time_on_charge() {
-	uint32_t hours = (rtc_get_current_time()-get_ext_ram_int(EXT_RAM_LAST_CHARGE))/3600;
-	uint32_t days = hours/24;
-	if (days < 100) {
+	uint32_t last = get_ext_ram_int(EXT_RAM_LAST_CHARGE);
+	uint32_t now = rtc_get_current_time();
+	if (last <= now) {
+		uint32_t hours = (now-last)/3600;
+		uint32_t days = hours/24;
 		char days_str[20];
 		snprintf(days_str, 20, I18N_TRANSLATE(MESSAGE_DAYS_ON_BATTERY), days, hours%24);
 		fillRectangle(0, 88, MLCD_XRES, 16, DRAW_BLACK);
 		mlcd_draw_text(days_str, 0, 88, MLCD_XRES, NULL, FONT, HORIZONTAL_ALIGN_CENTER);
 	}
+
 	int32_t percent = battery_get_level();
 	char perc_str[5];
 	snprintf(perc_str, 5, "%d%%", percent);
