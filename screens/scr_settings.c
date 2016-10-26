@@ -19,7 +19,6 @@
 
 #define MARGIN_LEFT 			3
 #define SCROLL_HEIGHT			6
-#define HEADER_HEIGHT			18
 #define SUMMARY_X					102
 #define MENU_ITEM_HEIGHT	20
 #define MENU_ITEMS_PER_PAGE 7
@@ -318,7 +317,7 @@ static const MENU_OPTION settings_menu[] = {
 static const uint8_t SIZE_OF_MENU = sizeof(settings_menu)/sizeof(MENU_OPTION);
 
 static void draw_option(uint_fast8_t item) {
-	uint_fast8_t yPos = HEADER_HEIGHT + 4 + MENU_ITEM_HEIGHT * (item % MENU_ITEMS_PER_PAGE);
+	uint_fast8_t yPos = HEADER_HEIGHT + 5 + MENU_ITEM_HEIGHT * (item % MENU_ITEMS_PER_PAGE);
  	mlcd_draw_text(I18N_TRANSLATE(settings_menu[item].message_key), MARGIN_LEFT, yPos, MLCD_XRES-MARGIN_LEFT, NULL, FONT_OPTION_NORMAL, HORIZONTAL_ALIGN_LEFT);
 	void (*s_drawer)(uint8_t x, uint8_t y) = settings_menu[item].summary_drawer;
 	uint8_t sel_width = MLCD_XRES;
@@ -331,24 +330,24 @@ static void draw_option(uint_fast8_t item) {
 }
 
 static void scr_settings_draw_options() {
-		uint8_t page_no = selectedOption / MENU_ITEMS_PER_PAGE;
-		uint8_t start_item = page_no * MENU_ITEMS_PER_PAGE;
-		uint8_t items_no;
-		if (SIZE_OF_MENU - start_item < MENU_ITEMS_PER_PAGE)
-				items_no = SIZE_OF_MENU - start_item;
-		else
-				items_no = MENU_ITEMS_PER_PAGE;
-		for (int i=0; i<items_no; i++) {
-				draw_option(start_item+i);
-		}
-		if (page_no > 0)
-				fillUp(MLCD_XRES/2, HEADER_HEIGHT-SCROLL_HEIGHT-2, SCROLL_HEIGHT, DRAW_WHITE);
-		if (page_no + 1 < CEIL(SIZE_OF_MENU, MENU_ITEMS_PER_PAGE))
-				fillDown(MLCD_XRES/2, MLCD_YRES-2, SCROLL_HEIGHT, DRAW_WHITE);
-		if (lastSelectedOption / MENU_ITEMS_PER_PAGE == 1 && page_no == 0) {
-				fillRectangle(0, 0, MLCD_XRES, HEADER_HEIGHT, DRAW_BLACK);
-				scr_mngr_draw_notification_bar();
-		}
+	uint8_t page_no = selectedOption / MENU_ITEMS_PER_PAGE;
+	uint8_t start_item = page_no * MENU_ITEMS_PER_PAGE;
+	uint8_t items_no;
+	if (SIZE_OF_MENU - start_item < MENU_ITEMS_PER_PAGE)
+		items_no = SIZE_OF_MENU - start_item;
+	else
+		items_no = MENU_ITEMS_PER_PAGE;
+	for (int i=0; i<items_no; i++) {
+		draw_option(start_item+i);
+	}
+	if (page_no > 0)
+		fillUp(MLCD_XRES/2, HEADER_HEIGHT-SCROLL_HEIGHT-2, SCROLL_HEIGHT, DRAW_WHITE);
+	if (page_no + 1 < CEIL(SIZE_OF_MENU, MENU_ITEMS_PER_PAGE))
+		fillDown(MLCD_XRES/2, MLCD_YRES-3, SCROLL_HEIGHT, DRAW_WHITE);
+	if (lastSelectedOption / MENU_ITEMS_PER_PAGE == 1 && page_no == 0) {
+		fillRectangle(0, 0, MLCD_XRES, HEADER_HEIGHT, DRAW_BLACK);
+		scr_mngr_draw_notification_bar();
+	}
 }
 
 static void scr_settings_refresh_screen() {
@@ -384,17 +383,17 @@ static void scr_settings_init() {
 }
 
 static void scr_settings_draw_screen() {
-	  scr_mngr_draw_notification_bar();
-		scr_settings_draw_options();
+	scr_mngr_draw_notification_bar();
+	scr_settings_draw_options();
 }
 
 static void scr_refresh_summary() {
-		void (*s_drawer)(uint8_t, uint8_t) = settings_menu[selectedOption].summary_drawer;
-		if (s_drawer != NULL) {
-				uint_fast8_t yPos = HEADER_HEIGHT+MENU_ITEM_HEIGHT*(selectedOption%MENU_ITEMS_PER_PAGE);
-				fillRectangle(0, yPos+2, MLCD_XRES, MENU_ITEM_HEIGHT, DRAW_BLACK);
-				draw_option(selectedOption);
-		}
+	void (*s_drawer)(uint8_t, uint8_t) = settings_menu[selectedOption].summary_drawer;
+	if (s_drawer != NULL) {
+		uint_fast8_t yPos = HEADER_HEIGHT+MENU_ITEM_HEIGHT*(selectedOption%MENU_ITEMS_PER_PAGE);
+		fillRectangle(0, yPos+2, MLCD_XRES, MENU_ITEM_HEIGHT, DRAW_BLACK);
+		draw_option(selectedOption);
+	}
 }
 
 static bool scr_settings_handle_button_pressed(uint32_t button_id) {

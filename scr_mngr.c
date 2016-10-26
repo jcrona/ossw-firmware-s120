@@ -26,6 +26,9 @@
 #include "watchset.h"
 
 static NUMBER_CONTROL_DATA hour_ctrl_data;
+static NUMBER_CONTROL_DATA minutes_ctrl_data;
+static NUMBER_CONTROL_DATA battery_level_ctrl_data;
+
 static uint32_t switch_to_screen_param = 0;
 static uint32_t scr_alert_notification_address = 0;
 static uint8_t switch_to_screen = SCR_NOT_SET;
@@ -55,20 +58,18 @@ void set_modal_dialog(bool state) {
 static const SCR_CONTROL_NUMBER_CONFIG hour_config = {
 		NUMBER_RANGE_0__99,
 	  2,
-	  2,
-	  NUMBER_FORMAT_FLAG_ZERO_PADDED | 2 << 24 | 2 << 16 | 8 << 8 | 13,
+	  0,
+	  NUMBER_FORMAT_FLAG_ZERO_PADDED | 2 << 24 | 2 << 16 | 8 << 8 | 12,
 	  (uint32_t (*)(uint32_t, uint8_t, uint8_t*, bool*))rtc_get_current_hour_24,
 	  0,
     &hour_ctrl_data
 };
 
-static NUMBER_CONTROL_DATA minutes_ctrl_data;
-
 static const SCR_CONTROL_NUMBER_CONFIG minutes_config = {
 		NUMBER_RANGE_0__99,
 	  26,
-	  2,
-	  NUMBER_FORMAT_FLAG_ZERO_PADDED | 2 << 24 | 2 << 16 | 8 << 8 | 13,
+	  0,
+	  NUMBER_FORMAT_FLAG_ZERO_PADDED | 2 << 24 | 2 << 16 | 8 << 8 | 12,
 	  (uint32_t (*)(uint32_t, uint8_t, uint8_t*, bool*))rtc_get_current_minutes,
 	  0,
     &minutes_ctrl_data
@@ -76,32 +77,30 @@ static const SCR_CONTROL_NUMBER_CONFIG minutes_config = {
 
 static const SCR_CONTROL_STATIC_RECT_CONFIG vert_separator_config = {
 	  0,
-	  17,
+	  HEADER_HEIGHT-1,
 	  MLCD_XRES,
 	  1
 };
 
 static const SCR_CONTROL_STATIC_RECT_CONFIG hour_sep_dot_1_config = {
 	  22,
-	  4,
+	  3,
 	  2,
 	  2
 };
 
 static const SCR_CONTROL_STATIC_RECT_CONFIG hour_sep_dot_2_config = {
 	  22,
-	  11,
+	  9,
 	  2,
 	  2
 };
 
-static NUMBER_CONTROL_DATA battery_level_ctrl_data;
-
 static const SCR_CONTROL_PROGRESS_BAR_CONFIG battery_level_config = {
-	  119,
-	  3,
-	  23,
-	  11,
+	  121,
+	  1,
+	  21,
+	  10,
 	  100,
 		1<<16,
 	  (uint32_t (*)(uint32_t, uint8_t, uint8_t*, bool*))battery_get_level,

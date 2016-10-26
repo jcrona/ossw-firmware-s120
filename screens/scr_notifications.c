@@ -14,7 +14,6 @@
 #include <stdlib.h> 
 
 #define MARGIN_LEFT 1
-#define MARGIN_TOP  12
 
 static bool scr_notifications_handle_button_pressed(uint32_t button_id) {
 	  switch (button_id) {
@@ -91,52 +90,54 @@ static void scr_notifications_init() {
 }
 
 static void scr_notifications_draw_screen() {
-		uint16_t read_address = notifications_get_current_data();
-    uint8_t notification_type = get_next_byte(&read_address);
+	scr_mngr_draw_notification_bar();
+	uint16_t read_address = notifications_get_current_data();
+  uint8_t notification_type = get_next_byte(&read_address);
 	
-		switch(notification_type) {
-				case NOTIFICATIONS_CATEGORY_MESSAGE:
-				case NOTIFICATIONS_CATEGORY_EMAIL:
-				case NOTIFICATIONS_CATEGORY_SOCIAL:
-				case NOTIFICATIONS_CATEGORY_ALARM:
-				case NOTIFICATIONS_CATEGORY_INCOMING_CALL:
-				case NOTIFICATIONS_CATEGORY_OTHER:
-				{
-						uint16_t notification_id = get_next_short(&read_address);
-						uint8_t page = get_next_byte(&read_address);
-						uint8_t font = get_next_byte(&read_address);
-						bool has_more = get_next_byte(&read_address);
+	switch(notification_type) {
+		case NOTIFICATIONS_CATEGORY_MESSAGE:
+		case NOTIFICATIONS_CATEGORY_EMAIL:
+		case NOTIFICATIONS_CATEGORY_SOCIAL:
+		case NOTIFICATIONS_CATEGORY_ALARM:
+		case NOTIFICATIONS_CATEGORY_INCOMING_CALL:
+		case NOTIFICATIONS_CATEGORY_OTHER:
+		{
+			uint16_t notification_id = get_next_short(&read_address);
+			uint8_t page = get_next_byte(&read_address);
+			uint8_t font = get_next_byte(&read_address);
+			bool has_more = get_next_byte(&read_address);
 
-						int msg_count = get_ext_ram_byte(EXT_RAM_MSG_COUNT);
-						if (msg_count == 0)
-							msg_count = 1;
-						if (msg_count > 9)
-							mlcd_draw_digit(msg_count/10, MLCD_XRES-22, 0, 6, 10, 2);
-						mlcd_draw_digit(msg_count%10, MLCD_XRES-14, 0, 6, 10, 2);
-						//hLine(MARGIN_TOP-1, 0, MLCD_XRES-1, DRAW_WHITE);
-						char* data_ptr = (char*)(0x80000000 + read_address);
-						mlcd_draw_text(data_ptr, MARGIN_LEFT, MARGIN_TOP, MLCD_XRES-2*MARGIN_LEFT, MLCD_YRES - MARGIN_TOP,
-							font, HORIZONTAL_ALIGN_LEFT | MULTILINE);
-						if (get_settings(CONFIG_NOTIFICATION_LIGHT))
-								mlcd_backlight_short();
-				}
-						break;
-				case NOTIFICATIONS_CATEGORY_SUMMARY:
-				{
-						uint8_t notification_count = get_next_byte(&read_address);
-						put_ext_ram_byte(EXT_RAM_MSG_COUNT, notification_count);
-						if (notification_count > 0)
-							notifications_invoke_function(NOTIFICATIONS_SHOW_FIRST);
-						else {
-							mlcd_draw_text(I18N_TRANSLATE(MESSAGE_NO_MESSAGES), 0, MLCD_YRES/2-30, MLCD_XRES, 60, FONT_OPTION_BIG, HORIZONTAL_ALIGN_CENTER | MULTILINE);
-//							scr_mngr_close_notifications();
-						}
-				}
-						break;
+			int msg_count = get_ext_ram_byte(EXT_RAM_MSG_COUNT);
+			if (msg_count == 0)
+				msg_count = 1;
+
+			if (msg_count > 9)
+				mlcd_draw_digit(msg_count/10, MLCD_XRES/2-10, 0, 8, 12, 2);
+			mlcd_draw_digit(msg_count%10, MLCD_XRES/2, 0, 8, 12, 2);
+			char* data_ptr = (char*)(0x80000000 + read_address);
+			mlcd_draw_text(data_ptr, MARGIN_LEFT, HEADER_HEIGHT, MLCD_XRES-2*MARGIN_LEFT, MLCD_YRES-HEADER_HEIGHT,
+				font, HORIZONTAL_ALIGN_LEFT | MULTILINE);
+			if (get_settings(CONFIG_NOTIFICATION_LIGHT))
+				mlcd_backlight_short();
 		}
+		break;
+		case NOTIFICATIONS_CATEGORY_SUMMARY:
+		{
+			uint8_t notification_count = get_next_byte(&read_address);
+			put_ext_ram_byte(EXT_RAM_MSG_COUNT, notification_count);
+			if (notification_count > 0)
+				notifications_invoke_function(NOTIFICATIONS_SHOW_FIRST);
+			else {
+				mlcd_draw_text(I18N_TRANSLATE(MESSAGE_NO_MESSAGES), 0, MLCD_YRES/2-30, MLCD_XRES, 60, FONT_OPTION_BIG, HORIZONTAL_ALIGN_CENTER | MULTILINE);
+//				scr_mngr_close_notifications();
+			}
+		}
+		break;
+	}
 }
 
 static void scr_notifications_refresh_screen() {
+	scr_mngr_redraw_notification_bar();
 }
 
 bool scr_notifications_handle_event(uint32_t event_type, uint32_t event_param) {
