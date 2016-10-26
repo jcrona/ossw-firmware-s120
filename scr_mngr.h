@@ -52,7 +52,7 @@
 #define SCR_ALERT_NOTIFICATION_STATE_SHOW  2
 #define SCR_ALERT_NOTIFICATION_STATE_CLOSE 3
 
-#define HEADER_HEIGHT			14
+#define HEADER_HEIGHT			15
 
 typedef struct {
 		bool force_colors;

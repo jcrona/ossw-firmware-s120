@@ -317,7 +317,7 @@ static const MENU_OPTION settings_menu[] = {
 static const uint8_t SIZE_OF_MENU = sizeof(settings_menu)/sizeof(MENU_OPTION);
 
 static void draw_option(uint_fast8_t item) {
-	uint_fast8_t yPos = HEADER_HEIGHT + 5 + MENU_ITEM_HEIGHT * (item % MENU_ITEMS_PER_PAGE);
+	uint_fast8_t yPos = HEADER_HEIGHT + 4 + MENU_ITEM_HEIGHT * (item % MENU_ITEMS_PER_PAGE);
  	mlcd_draw_text(I18N_TRANSLATE(settings_menu[item].message_key), MARGIN_LEFT, yPos, MLCD_XRES-MARGIN_LEFT, NULL, FONT_OPTION_NORMAL, HORIZONTAL_ALIGN_LEFT);
 	void (*s_drawer)(uint8_t x, uint8_t y) = settings_menu[item].summary_drawer;
 	uint8_t sel_width = MLCD_XRES;
