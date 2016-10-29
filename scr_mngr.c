@@ -84,14 +84,14 @@ static const SCR_CONTROL_STATIC_RECT_CONFIG vert_separator_config = {
 
 static const SCR_CONTROL_STATIC_RECT_CONFIG hour_sep_dot_1_config = {
 	  22,
-	  3,
+	  2,
 	  2,
 	  2
 };
 
 static const SCR_CONTROL_STATIC_RECT_CONFIG hour_sep_dot_2_config = {
 	  22,
-	  9,
+	  8,
 	  2,
 	  2
 };

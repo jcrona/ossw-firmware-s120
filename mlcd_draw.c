@@ -307,7 +307,7 @@ uint_fast8_t mlcd_calc_text_height(const char *text, uint_fast8_t start_x, uint_
 				x = start_x;
 				y += font->height;
 				if(!last_line) {
-						y += (c==11 ? (font->height >> 1) : 0);
+						y += (c==11 ? (font->height >> 2) : 0);
 				}
 		} while(!last_line);
 				
@@ -388,7 +388,7 @@ uint_fast8_t mlcd_draw_text(const char *text, uint_fast8_t start_x, uint_fast8_t
 					fillRectangle(start_x, y+font->height-2, x-start_x, 2, DRAW_WHITE);
 				
 				x = start_x;
-				y += font->height + (c==11 ? (font->height >> 1) : 0);
+				y += font->height + (c==11 ? (font->height >> 2) : 0);
 		} while(!last_line);
 				
 		return 0;
