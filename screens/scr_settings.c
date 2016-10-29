@@ -303,7 +303,7 @@ static const MENU_OPTION settings_menu[] = {
 		{MESSAGE_RTC_REFRESH, rtc_refresh_toggle, rtc_refresh_toggle, draw_interval_summary},
 		{MESSAGE_STEPS, pedometer_toggle, reset_steps, draw_steps},
 		{MESSAGE_SLEEP_AS_ANDROID, sleep_as_android_toggle, sleep_as_android_toggle, draw_sleep_switch},
-		{MESSAGE_ACCELEROMETER, accelerometer_toggle, accelerometer_toggle, draw_accel_switch},
+//		{MESSAGE_ACCELEROMETER, accelerometer_toggle, accelerometer_toggle, draw_accel_switch},
 		{MESSAGE_BLUETOOTH, bluetooth_toggle, bluetooth_toggle, draw_bluetooth_switch},
 		{MESSAGE_BT_SLEEP, bt_sleep_toggle, bt_sleep_toggle, draw_bt_sleep_switch},
 		{MESSAGE_CENTRAL_MODE, central_mode_toggle, central_mode_toggle, draw_central_mode_switch},

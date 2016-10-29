@@ -243,7 +243,7 @@ static void accel_int_handler(void *p_event_data, uint16_t event_size) {
 			accel_read_multi_register(0x01, (uint8_t *)data, 2 * FIFO_SIZE);
 			bool acc_sleep = get_settings(CONFIG_SLEEP_AS_ANDROID);
 			bool acc_ped = get_settings(CONFIG_PEDOMETER);
-			bool acc_raw = get_settings(CONFIG_ACCELEROMETER);
+			bool acc_raw = false; //get_settings(CONFIG_ACCELEROMETER);
 			if (acc_sleep || acc_raw || acc_ped) {
 				fifo_count++;
 				for (int i = 0; i < FIFO_SIZE; i++)
@@ -277,10 +277,10 @@ static void accel_int_handler(void *p_event_data, uint16_t event_size) {
 					sz = data[FIFO_SIZE-1];
 				}
 
-				if (acc_raw)
-					for (int p = 0; p < FIFO_PACKETS; p++)
-						ble_peripheral_invoke_notification_function_with_data(PHONE_FUNC_ACCELEROMETER,
-							(uint8_t *)&data[FIFO_PACKET_SIZE * p], FIFO_PACKET_SIZE);
+//				if (acc_raw)
+//					for (int p = 0; p < FIFO_PACKETS; p++)
+//						ble_peripheral_invoke_notification_function_with_data(PHONE_FUNC_ACCELEROMETER,
+//							(uint8_t *)&data[FIFO_PACKET_SIZE * p], FIFO_PACKET_SIZE);
 
 				if (acc_ped && steps_delta > 0 && (fifo_count & PED_DELTA_PERIOD) == 0) {
 					ble_peripheral_invoke_notification_function_with_data(PHONE_FUNC_PED_DELTA, (uint8_t *)&steps_delta, 2);
