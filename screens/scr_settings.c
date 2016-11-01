@@ -106,29 +106,29 @@ static void draw_alarm_switch(uint8_t x, uint8_t y) {
 }
 
 static void draw_shake_light_switch(uint8_t x, uint8_t y) {
-		default_action* default_actions = config_get_default_global_actions();
-		bool on = default_actions[8].action_id;
-		draw_switch(x+MENU_SWITCH_PADDING_X, y, on);
+	default_action* default_actions = config_get_default_global_actions();
+	bool on = default_actions[8].action_id;
+	draw_switch(x+MENU_SWITCH_PADDING_X, y, on);
 }
 
 static void draw_notif_light_switch(uint8_t x, uint8_t y) {
-		bool on = get_settings(CONFIG_NOTIFICATION_LIGHT);
-		draw_switch(x+MENU_SWITCH_PADDING_X, y, on);
+	bool on = get_settings(CONFIG_NOTIFICATION_LIGHT);
+	draw_switch(x+MENU_SWITCH_PADDING_X, y, on);
 }
 
 static void draw_buttons_light_switch(uint8_t x, uint8_t y) {
-		bool on = get_settings(CONFIG_BUTTONS_LIGHT);
-		draw_switch(x+MENU_SWITCH_PADDING_X, y, on);
+	bool on = get_settings(CONFIG_BUTTONS_LIGHT);
+	draw_switch(x+MENU_SWITCH_PADDING_X, y, on);
 }
 
 static void draw_oclock_switch(uint8_t x, uint8_t y) {
-		bool on = get_settings(CONFIG_OCLOCK);
-		draw_switch(x+MENU_SWITCH_PADDING_X, y, on);
+	bool on = get_settings(CONFIG_OCLOCK);
+	draw_switch(x+MENU_SWITCH_PADDING_X, y, on);
 }
 
 static void draw_colors_switch(uint8_t x, uint8_t y) {
-		bool on = is_mlcd_inverted();
-		draw_switch(x+MENU_SWITCH_PADDING_X, y, on);
+	bool on = is_mlcd_inverted();
+	draw_switch(x+MENU_SWITCH_PADDING_X, y, on);
 }
 
 static void draw_disconnect_alert_switch(uint8_t x, uint8_t y) {
@@ -283,35 +283,35 @@ static void shake_light_toggle() {
 //}
 
 static const MENU_OPTION settings_menu[] = {
-		{MESSAGE_TIMER, opt_handler_timer, opt_handler_timer, NULL},
-		{MESSAGE_SEND_SMS, opt_handler_send_sms, opt_handler_send_sms, NULL},
-		{MESSAGE_CALL_CONTACT, opt_handler_call_contact, opt_handler_call_contact, NULL},
-		{MESSAGE_GTASKS, opt_handler_gtasks, opt_handler_gtasks, NULL},
-		{MESSAGE_NOTIFICATIONS, opt_handler_notifications, opt_handler_notifications, NULL},
-		{MESSAGE_WATCH_FACES, opt_handler_watch_faces, opt_handler_watch_faces, NULL},
-		{MESSAGE_PHONE_DISCOVERY, opt_handler_phone_discovery, opt_handler_phone_discovery, NULL},
-		{MESSAGE_ALARM_CLOCK, opt_handler_set_alarm, alarm_toggle, draw_alarm_switch},
-		{MESSAGE_DISPLAY, mlcd_colors_toggle, mlcd_colors_toggle, draw_colors_switch},
-		{MESSAGE_SHAKE_LIGHT, shake_light_toggle, shake_light_toggle, draw_shake_light_switch},
-		{MESSAGE_NOTIF_LIGHT, notif_light_toggle, notif_light_toggle, draw_notif_light_switch},
-		{MESSAGE_BUTTONS_LIGHT, buttons_light_toggle, buttons_light_toggle, draw_buttons_light_switch},
-		{MESSAGE_DARK_HOURS, opt_handler_dark_hours, opt_handler_dark_hours, draw_dark_hours},
-		{MESSAGE_SILENT_HOURS, opt_handler_silent_hours, opt_handler_silent_hours, draw_silent_hours},
-		{MESSAGE_LIGHT_DELAY, opt_handler_light_delay, opt_handler_light_delay, draw_light_delay},
-		{MESSAGE_OCLOCK, oclock_toggle, oclock_toggle, draw_oclock_switch},
-		{MESSAGE_DISCONNECT_ALERT, disconnect_alert_toggle, disconnect_alert_toggle, draw_disconnect_alert_switch},
-		{MESSAGE_RTC_REFRESH, rtc_refresh_toggle, rtc_refresh_toggle, draw_interval_summary},
-		{MESSAGE_STEPS, pedometer_toggle, reset_steps, draw_steps},
-		{MESSAGE_SLEEP_AS_ANDROID, sleep_as_android_toggle, sleep_as_android_toggle, draw_sleep_switch},
-//		{MESSAGE_ACCELEROMETER, accelerometer_toggle, accelerometer_toggle, draw_accel_switch},
-		{MESSAGE_BLUETOOTH, bluetooth_toggle, bluetooth_toggle, draw_bluetooth_switch},
-		{MESSAGE_BT_SLEEP, bt_sleep_toggle, bt_sleep_toggle, draw_bt_sleep_switch},
-		{MESSAGE_CENTRAL_MODE, central_mode_toggle, central_mode_toggle, draw_central_mode_switch},
-	  {MESSAGE_DATE, opt_handler_change_date, opt_handler_change_date, NULL},
-		{MESSAGE_TIME, opt_handler_change_time, opt_handler_change_time, NULL},
-		{MESSAGE_FORMAT, reformat, reformat, NULL},
-		{MESSAGE_RESTART, reboot, reboot, NULL},
-//		{MESSAGE_ABOUT, test_handler, test_handler, NULL}
+	{MESSAGE_TIMER, opt_handler_timer, opt_handler_timer, NULL},
+	{MESSAGE_SEND_SMS, opt_handler_send_sms, opt_handler_send_sms, NULL},
+	{MESSAGE_CALL_CONTACT, opt_handler_call_contact, opt_handler_call_contact, NULL},
+	{MESSAGE_GTASKS, opt_handler_gtasks, opt_handler_gtasks, NULL},
+	{MESSAGE_NOTIFICATIONS, opt_handler_notifications, opt_handler_notifications, NULL},
+	{MESSAGE_WATCH_FACES, opt_handler_watch_faces, opt_handler_watch_faces, NULL},
+	{MESSAGE_PHONE_DISCOVERY, opt_handler_phone_discovery, opt_handler_phone_discovery, NULL},
+	{MESSAGE_ALARM_CLOCK, opt_handler_set_alarm, alarm_toggle, draw_alarm_switch},
+	{MESSAGE_DISPLAY, mlcd_colors_toggle, mlcd_colors_toggle, draw_colors_switch},
+	{MESSAGE_SHAKE_LIGHT, shake_light_toggle, shake_light_toggle, draw_shake_light_switch},
+	{MESSAGE_NOTIF_LIGHT, notif_light_toggle, notif_light_toggle, draw_notif_light_switch},
+	{MESSAGE_BUTTONS_LIGHT, buttons_light_toggle, buttons_light_toggle, draw_buttons_light_switch},
+	{MESSAGE_DARK_HOURS, opt_handler_dark_hours, opt_handler_dark_hours, draw_dark_hours},
+	{MESSAGE_SILENT_HOURS, opt_handler_silent_hours, opt_handler_silent_hours, draw_silent_hours},
+	{MESSAGE_LIGHT_DELAY, opt_handler_light_delay, opt_handler_light_delay, draw_light_delay},
+	{MESSAGE_OCLOCK, oclock_toggle, oclock_toggle, draw_oclock_switch},
+	{MESSAGE_DISCONNECT_ALERT, disconnect_alert_toggle, disconnect_alert_toggle, draw_disconnect_alert_switch},
+	{MESSAGE_RTC_REFRESH, rtc_refresh_toggle, rtc_refresh_toggle, draw_interval_summary},
+	{MESSAGE_STEPS, pedometer_toggle, reset_steps, draw_steps},
+	{MESSAGE_SLEEP_AS_ANDROID, sleep_as_android_toggle, sleep_as_android_toggle, draw_sleep_switch},
+//	{MESSAGE_ACCELEROMETER, accelerometer_toggle, accelerometer_toggle, draw_accel_switch},
+	{MESSAGE_BLUETOOTH, bluetooth_toggle, bluetooth_toggle, draw_bluetooth_switch},
+	{MESSAGE_BT_SLEEP, bt_sleep_toggle, bt_sleep_toggle, draw_bt_sleep_switch},
+	{MESSAGE_CENTRAL_MODE, central_mode_toggle, central_mode_toggle, draw_central_mode_switch},
+	{MESSAGE_DATE, opt_handler_change_date, opt_handler_change_date, NULL},
+	{MESSAGE_TIME, opt_handler_change_time, opt_handler_change_time, NULL},
+	{MESSAGE_FORMAT, reformat, reformat, NULL},
+	{MESSAGE_RESTART, reboot, reboot, NULL},
+//	{MESSAGE_ABOUT, test_handler, test_handler, NULL}
 };
 
 static const uint8_t SIZE_OF_MENU = sizeof(settings_menu)/sizeof(MENU_OPTION);
@@ -397,68 +397,68 @@ static void scr_refresh_summary() {
 }
 
 static bool scr_settings_handle_button_pressed(uint32_t button_id) {
-	  switch (button_id) {
-			  case SCR_EVENT_PARAM_BUTTON_BACK:
-					  scr_mngr_show_screen(SCR_WATCHFACE);
-				    return true;
-			  case SCR_EVENT_PARAM_BUTTON_UP:
-				    if (selectedOption > 0)
-								selectedOption--;
-				    return true;
-			  case SCR_EVENT_PARAM_BUTTON_DOWN:
-				    if (selectedOption+1 < SIZE_OF_MENU)
-								selectedOption++;
-				    return true;
-			  case SCR_EVENT_PARAM_BUTTON_SELECT:
-					  settings_menu[selectedOption].select_handler();
-						scr_refresh_summary();
-				    return true;
-		}
-		return false;
+	switch (button_id) {
+	  case SCR_EVENT_PARAM_BUTTON_BACK:
+		  scr_mngr_show_screen(SCR_WATCHFACE);
+	    return true;
+	  case SCR_EVENT_PARAM_BUTTON_UP:
+	    if (selectedOption > 0)
+				selectedOption--;
+	    return true;
+	  case SCR_EVENT_PARAM_BUTTON_DOWN:
+	    if (selectedOption+1 < SIZE_OF_MENU)
+				selectedOption++;
+	    return true;
+	  case SCR_EVENT_PARAM_BUTTON_SELECT:
+		  settings_menu[selectedOption].select_handler();
+			scr_refresh_summary();
+	    return true;
+	}
+	return false;
 }
 
 static bool scr_settings_handle_button_long_pressed(uint32_t button_id) {
-	  switch (button_id) {
-			  case SCR_EVENT_PARAM_BUTTON_UP:
-				    if (selectedOption > MENU_ITEMS_PER_PAGE)
-								selectedOption -= MENU_ITEMS_PER_PAGE;
-						else
-								selectedOption = 0;
-				    return true;
-			  case SCR_EVENT_PARAM_BUTTON_DOWN:
-				    if (selectedOption + MENU_ITEMS_PER_PAGE < SIZE_OF_MENU)
-								selectedOption += MENU_ITEMS_PER_PAGE;
-						else
-								selectedOption = SIZE_OF_MENU-1;
-				    return true;
-			  case SCR_EVENT_PARAM_BUTTON_SELECT: {
-						void (*ls_handler)() = settings_menu[selectedOption].long_select_handler;
-						if (ls_handler != NULL) {
-								ls_handler();
-								scr_refresh_summary();
-								return true;
-						}
-				}
+	switch (button_id) {
+	  case SCR_EVENT_PARAM_BUTTON_UP:
+	    if (selectedOption > MENU_ITEMS_PER_PAGE)
+				selectedOption -= MENU_ITEMS_PER_PAGE;
+			else
+				selectedOption = 0;
+			return true;
+		case SCR_EVENT_PARAM_BUTTON_DOWN:
+			if (selectedOption + MENU_ITEMS_PER_PAGE < SIZE_OF_MENU)
+				selectedOption += MENU_ITEMS_PER_PAGE;
+			else
+				selectedOption = SIZE_OF_MENU-1;
+			return true;
+		case SCR_EVENT_PARAM_BUTTON_SELECT: {
+			void (*ls_handler)() = settings_menu[selectedOption].long_select_handler;
+			if (ls_handler != NULL) {
+				ls_handler();
+				scr_refresh_summary();
+				return true;
+			}
 		}
-		return false;
+	}
+	return false;
 }
 
 bool scr_settings_handle_event(uint32_t event_type, uint32_t event_param) {
-	  switch(event_type) {
-			  case SCR_EVENT_INIT_SCREEN:
-				    scr_settings_init();
-				    return true;
-        case SCR_EVENT_DRAW_SCREEN:
-            scr_settings_draw_screen();
-            return true;
-        case SCR_EVENT_REFRESH_SCREEN:
-            scr_settings_refresh_screen();
-            return true;
-			  case SCR_EVENT_BUTTON_PRESSED:
-				    return scr_settings_handle_button_pressed(event_param);
-			  case SCR_EVENT_BUTTON_LONG_PRESSED: {
-						return scr_settings_handle_button_long_pressed(event_param);
-				}
+	switch(event_type) {
+		case SCR_EVENT_INIT_SCREEN:
+			scr_settings_init();
+			return true;
+		case SCR_EVENT_DRAW_SCREEN:
+			scr_settings_draw_screen();
+			return true;
+		case SCR_EVENT_REFRESH_SCREEN:
+			scr_settings_refresh_screen();
+			return true;
+		case SCR_EVENT_BUTTON_PRESSED:
+			return scr_settings_handle_button_pressed(event_param);
+	  case SCR_EVENT_BUTTON_LONG_PRESSED: {
+			return scr_settings_handle_button_long_pressed(event_param);
 		}
-		return false;
+	}
+	return false;
 }
