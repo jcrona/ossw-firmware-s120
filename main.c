@@ -8,7 +8,7 @@
 #include "nordic_common.h"
 #include "nrf.h"
 #include "app_error.h"
-#include "app_button.h"
+#include "button_lib.h"
 #include "nrf51_bitfields.h"
 #include "board.h"
 #include "app_trace.h"

@@ -1,7 +1,7 @@
 #include "config.h"
 #include "fs.h"
 #include "ext_ram.h"
-#include "app_button.h"
+#include "button_lib.h"
 #include "watchset.h"
 #include "scr_mngr.h"
 
