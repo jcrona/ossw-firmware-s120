@@ -1665,7 +1665,7 @@ const FONT_CHAR_INFO normalRegularFontDescriptors[] =
 	{7, 945}, 		// Y 
 	{6, 960}, 		// Z 
 	{3, 975}, 		// [ 
-	{5, 990}, 		// \ 
+	{5, 990}, 		// backslash
 	{3, 1005}, 		// ] 
 	{5, 1020}, 		// ^ 
 	{8, 1035}, 		// _ 

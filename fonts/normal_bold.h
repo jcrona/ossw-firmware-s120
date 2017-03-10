@@ -1759,7 +1759,7 @@ const FONT_CHAR_INFO normalBoldFontDescriptors[] =
 	{10, 1088}, 		// Y 
 	{6, 1120}, 		// Z 
 	{4, 1136}, 		// [ 
-	{5, 1152}, 		// \ 
+	{5, 1152}, 		// backslash
 	{4, 1168}, 		// ] 
 	{5, 1184}, 		// ^ 
 	{9, 1200}, 		// _ 

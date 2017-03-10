@@ -1847,7 +1847,7 @@ const FONT_CHAR_INFO optionNormalFontDescriptors[] =
 	{10, 1188}, 		// Y 
 	{8, 1224}, 		// Z 
 	{4, 1242}, 		// [ 
-	{6, 1260}, 		// \ 
+	{6, 1260}, 		// backslash
 	{4, 1278}, 		// ] 
 	{6, 1296}, 		// ^ 
 	{8, 1314}, 		// _ 

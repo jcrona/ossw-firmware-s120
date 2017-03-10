@@ -1289,7 +1289,7 @@ const FONT_CHAR_INFO smallRegularFontDescriptors[] =
 	{7, 627}, 		// Y 
 	{5, 638}, 		// Z 
 	{2, 649}, 		// [ 
-	{4, 660}, 		// \ 
+	{4, 660}, 		// backslash
 	{2, 671}, 		// ] 
 	{5, 682}, 		// ^ 
 	{6, 693}, 		// _ 

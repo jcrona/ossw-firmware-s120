@@ -2041,7 +2041,7 @@ const FONT_CHAR_INFO bigRegularFontDescriptors[] =
 	{10, 1577}, 		// Y 
 	{8, 1615}, 		// Z 
 	{4, 1634}, 		// [ 
-	{7, 1653}, 		// \ 
+	{7, 1653}, 		// backslash
 	{4, 1672}, 		// ] 
 	{7, 1691}, 		// ^ 
 	{10, 1710}, 		// _ 

@@ -1289,7 +1289,7 @@ const FONT_CHAR_INFO smallBoldFontDescriptors[] =
 	{8, 627}, 		// Y 
 	{6, 638}, 		// Z 
 	{3, 649}, 		// [ 
-	{4, 660}, 		// \ 
+	{4, 660}, 		// backslash
 	{3, 671}, 		// ] 
 	{5, 682}, 		// ^ 
 	{6, 693}, 		// _ 
