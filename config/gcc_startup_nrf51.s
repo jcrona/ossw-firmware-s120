@@ -41,7 +41,7 @@ expected to be copied into the application project folder prior to its use!
 #ifdef __STACK_SIZE
     .equ    Stack_Size, __STACK_SIZE
 #else
-    .equ    Stack_Size, 1048
+    .equ    Stack_Size, 1024
 #endif
     .globl    __StackTop
     .globl    __StackLimit
@@ -56,7 +56,7 @@ __StackTop:
 #ifdef __HEAP_SIZE
     .equ    Heap_Size, __HEAP_SIZE
 #else
-    .equ    Heap_Size, 600
+    .equ    Heap_Size, 408
 #endif
     .globl    __HeapBase
     .globl    __HeapLimit
