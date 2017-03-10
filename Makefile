@@ -38,7 +38,7 @@ ASOPTS   = -mcpu=$(MCU) -mthumb -x assembler-with-cpp -DNDEBUG -Os
 
 LNLIBS   = -lm
 
-LNOPTS   = -mcpu=$(MCU) -mthumb -mabi=aapcs -Wl,--gc-sections -Wl,-Map=$(BUILDDIR)/$(notdir $(CURDIR)).map -flto
+LNOPTS   = -mcpu=$(MCU) -mthumb -mabi=aapcs -Wl,--gc-sections -Wl,-Map=$(BUILDDIR)/$(notdir $(CURDIR)).map -flto --specs=nano.specs
 LNOPTS  += -L$(CONFIGDIR) -T$(LD_FILE)
 
 
