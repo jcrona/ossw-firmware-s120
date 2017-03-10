@@ -29,7 +29,7 @@ DEVICE      := NRF51
 MCU         := cortex-m0
 LD_FILE     := armgcc_s120_nrf51822_ossw_xxaa.ld
 
-CCOPTS   = -mcpu=$(MCU) -mthumb -std=gnu99 -mabi=aapcs -Os -mfloat-abi=soft
+CCOPTS   = -mcpu=$(MCU) -mthumb -std=gnu99 -mabi=aapcs -Os -mfloat-abi=soft -flto
 CCOPTS  += -fno-common -fmessage-length=0 -fno-exceptions -ffunction-sections -fdata-sections -fomit-frame-pointer
 CCOPTS  += -Wall -Wshadow -Wstrict-aliasing -Wstrict-overflow -Wno-missing-field-initializers -Wno-unused-local-typedefs
 CCOPTS  += -DBLE_DFU_APP_SUPPORT -DBLE_STACK_SUPPORT_REQD -DNDEBUG -D$(DEVICE) -D$(BOARD) -D$(TARGET_CHIP) 
@@ -38,7 +38,7 @@ ASOPTS   = -mcpu=$(MCU) -mthumb -x assembler-with-cpp -DNDEBUG -Os
 
 LNLIBS   = -lm
 
-LNOPTS   = -mcpu=$(MCU) -mthumb -mabi=aapcs -Wl,--gc-sections -Wl,-Map=$(BUILDDIR)/$(notdir $(CURDIR)).map
+LNOPTS   = -mcpu=$(MCU) -mthumb -mabi=aapcs -Wl,--gc-sections -Wl,-Map=$(BUILDDIR)/$(notdir $(CURDIR)).map -flto
 LNOPTS  += -L$(CONFIGDIR) -T$(LD_FILE)
 
 
