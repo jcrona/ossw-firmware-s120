@@ -7,7 +7,7 @@
 #include "alarm.h"
 #include "config.h"
 #include "vibration.h"
-#include "BLE\ble_peripheral.h"
+#include "ble/ble_peripheral.h"
 
 #define OCLOCK_PATTERN							 0x04408000
 

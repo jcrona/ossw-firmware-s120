@@ -34,7 +34,7 @@
 #include "config.h"
 #include "alarm.h"
 #include "app_scheduler.h"
-#include "screens\scr_timer.h"
+#include "screens/scr_timer.h"
 #include "ble/ble_central.h"
 #include "ble/ble_peripheral.h"
 

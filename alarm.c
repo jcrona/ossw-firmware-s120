@@ -5,8 +5,8 @@
 #include "mlcd_draw.h"
 #include "scr_mngr.h"
 #include "app_scheduler.h"
-#include "i18n\i18n.h"
-#include "screens\dialog_option_text.h"
+#include "i18n/i18n.h"
+#include "screens/dialog_option_text.h"
 
 #define ALARM_VIBRATION		0x0060E738
 #define SNOOZE_MINUTES		2
