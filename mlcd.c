@@ -501,6 +501,12 @@ void mlcd_fb_draw_bitmap_from_file(spiffs_file file, uint_fast8_t x_pos, uint_fa
 			  width = MLCD_XRES - x_pos;
 		}
 		x_pos = MLCD_XRES - x_pos - width;
+		if (y_pos + height > MLCD_YRES) {
+			if (y_pos >= MLCD_YRES) {
+				return;
+			}
+			height = MLCD_YRES - y_pos;
+		}
 	  data.start_bit_off = x_pos & 0x7;
 	  data.first_byte_max_bit = width + data.start_bit_off;
 	  if (data.first_byte_max_bit > 8) {
