@@ -127,7 +127,7 @@ bool scr_status_handle_event(uint32_t event_type, uint32_t event_param) {
             return true;
 			  case SCR_EVENT_BUTTON_PRESSED:
 				    if (event_param == SCR_EVENT_PARAM_BUTTON_BACK) {
-							watchset_async_operation(WATCH_SET_OPERATION_NEXT_WATCH_FACE, 0);
+							scr_mngr_show_screen(SCR_WATCHFACE);
 							return true;
 						}
 		}
