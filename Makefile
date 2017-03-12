@@ -168,6 +168,6 @@ clean:
 $(BUILDDIR):
 	mkdir -p $@
 
-.PHONY: all program clean
+.PHONY: all clean
 
 .SECONDARY:
