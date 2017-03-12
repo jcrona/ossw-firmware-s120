@@ -29,10 +29,12 @@ DEVICE      := NRF51
 MCU         := cortex-m0
 LD_FILE     := armgcc_s120_nrf51822_ossw_xxaa.ld
 
+FIRMWARE_VERSION := FIRMWARE_VERSION=\"$(shell date +'%Y%m%d')-jc\"
+
 CCOPTS   = -mcpu=$(MCU) -mthumb -std=gnu99 -mabi=aapcs -Os -mfloat-abi=soft
 CCOPTS  += -fno-common -fmessage-length=0 -fno-exceptions -ffunction-sections -fdata-sections -fomit-frame-pointer
 CCOPTS  += -Wall -Wshadow -Wstrict-aliasing -Wstrict-overflow -Wno-missing-field-initializers -Wno-unused-local-typedefs
-CCOPTS  += -DBLE_DFU_APP_SUPPORT -DBLE_STACK_SUPPORT_REQD -DNDEBUG -D$(DEVICE) -D$(BOARD) -D$(TARGET_CHIP) 
+CCOPTS  += -DBLE_DFU_APP_SUPPORT -DBLE_STACK_SUPPORT_REQD -DNDEBUG -D$(DEVICE) -D$(BOARD) -D$(TARGET_CHIP) -D$(FIRMWARE_VERSION)
 
 ASOPTS   = -mcpu=$(MCU) -mthumb -x assembler-with-cpp -DNDEBUG -Os
 
