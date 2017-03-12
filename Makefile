@@ -1,6 +1,6 @@
-ROOT = ../toolchain
+ROOT = ..
 
-GNU   := $(ROOT)/gcc-arm-none-eabi-4_9-2014q4
+GNU   := $(ROOT)/toolchain/gcc-arm-none-eabi-4_9-2014q4
 
 CC    := $(GNU)/bin/arm-none-eabi-gcc
 AS    := $(GNU)/bin/arm-none-eabi-gcc
@@ -47,7 +47,7 @@ LNOPTS  += -L$(CONFIGDIR) -T$(LD_FILE)
 SRCS = $(wildcard $(BLEDIR)/*.c $(CONFIGDIR)/*.c $(CONFIGDIR)/*.s $(FONTSDIR)/*.c $(I18NDIR)/*.c $(PAWNDIR)/*.c $(SCREENSDIR)/*.c $(SPIFFSDIR)/*.c *.c)
 INC += -I$(BLEDIR) -I$(CONFIGDIR) -I$(FONTSDIR) -I$(I18NDIR) -I$(PAWNDIR) -I$(SCREENSDIR) -I$(SPIFFSDIR)
 
-SDK_PATH = ../nRF-SDK/components
+SDK_PATH = $(ROOT)/nRF-SDK/components
 
 # SDK files to build
 SRCS += $(SDK_PATH)/drivers_nrf/twi_master/incubated/twi_sw_master.c
