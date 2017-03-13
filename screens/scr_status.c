@@ -74,7 +74,7 @@ static void scr_status_draw_time_on_charge() {
 
 	int32_t percent = battery_get_level();
 	char perc_str[5];
-	snprintf(perc_str, 5, "%d%%", percent);
+	snprintf(perc_str, 5, "%ld%%", percent);
 	fillRectangle(0, 34, MLCD_XRES, 16, DRAW_BLACK);
 	mlcd_draw_text(perc_str, 0, 34, MLCD_XRES, 16, FONT, HORIZONTAL_ALIGN_CENTER);
 }
