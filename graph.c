@@ -24,11 +24,11 @@
 
 #define DRAW_BYTE(old, mask, mode) {\
 	if (mode == DRAW_XOR)\
-		old ^=  mask;\
+		old ^=  (uint8_t) mask;\
 	else if (mode == DRAW_WHITE)\
-		old |= mask;\
+		old |= (uint8_t) mask;\
 	else if (mode == DRAW_BLACK)\
-		old &= ~mask; }
+		old &= (uint8_t) ~mask; }
 	
 // plot a XOR pixel
 void pixel(uint_fast8_t x, uint_fast8_t y, uint8_t mode) {

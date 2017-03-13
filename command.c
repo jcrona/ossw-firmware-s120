@@ -91,7 +91,7 @@ void command_process(void) {
 							scr_mngr_show_screen(SCR_WATCHFACE);
 					}
 				
-					void* name_ptr = data_ptr > 1 ? &data_buf[4] : "watchset";
+					char* name_ptr = (data_ptr > 1) ? (char*) &data_buf[4] : "watchset";
 					data_upload_fd = SPIFFS_open(&fs, name_ptr, SPIFFS_CREAT | SPIFFS_TRUNC | SPIFFS_RDWR, 0);
 					if (data_upload_fd < 0) {
 							// file open error

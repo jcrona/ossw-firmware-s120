@@ -35,8 +35,8 @@ static uint32_t (* const internal_data_source_handles[])() = {
 		/* 14 */stopwatch_get_current_lap_time,
 		/* 15 */stopwatch_get_current_lap_split,
 		/* 16 */stopwatch_get_last_lap_time,
-		/* 17 */stopwatch_get_recall_lap_time,
-		/* 18 */stopwatch_get_recall_lap_split,
+		/* 17 */(uint32_t (*)())stopwatch_get_recall_lap_time,
+		/* 18 */(uint32_t (*)())stopwatch_get_recall_lap_split,
 		/* 19 */(uint32_t (*)())ossw_firmware_version,
 		/* 20 */(uint32_t (*)())ossw_mac_address
 };
