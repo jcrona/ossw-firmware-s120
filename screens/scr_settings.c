@@ -156,7 +156,7 @@ static void draw_silent_hours(uint8_t x, uint8_t y) {
 	txt[3] = '0' + h2/10;
 	txt[4] = '0' + h2%10;
 	txt[5] = '\0';
-	mlcd_draw_text(txt, x, y+2, MLCD_XRES-SUMMARY_X-MARGIN_LEFT, NULL, FONT_NORMAL_REGULAR, HORIZONTAL_ALIGN_RIGHT);
+	mlcd_draw_text(txt, x, y+2, MLCD_XRES-SUMMARY_X-MARGIN_LEFT, 0, FONT_NORMAL_REGULAR, HORIZONTAL_ALIGN_RIGHT);
 }
 
 static void draw_dark_hours(uint8_t x, uint8_t y) {
@@ -169,7 +169,7 @@ static void draw_dark_hours(uint8_t x, uint8_t y) {
 	txt[3] = '0' + h2/10;
 	txt[4] = '0' + h2%10;
 	txt[5] = '\0';
-	mlcd_draw_text(txt, x, y+2, MLCD_XRES-SUMMARY_X-MARGIN_LEFT, NULL, FONT_NORMAL_REGULAR, HORIZONTAL_ALIGN_RIGHT);
+	mlcd_draw_text(txt, x, y+2, MLCD_XRES-SUMMARY_X-MARGIN_LEFT, 0, FONT_NORMAL_REGULAR, HORIZONTAL_ALIGN_RIGHT);
 }
 
 static void draw_light_delay(uint8_t x, uint8_t y) {
@@ -178,14 +178,14 @@ static void draw_light_delay(uint8_t x, uint8_t y) {
 	txt[0] = '0' + delay;
 	txt[1] = 's';
 	txt[2] = '\0';
-	mlcd_draw_text(txt, x, y, MLCD_XRES-SUMMARY_X-MARGIN_LEFT, NULL, FONT_OPTION_NORMAL, HORIZONTAL_ALIGN_RIGHT);
+	mlcd_draw_text(txt, x, y, MLCD_XRES-SUMMARY_X-MARGIN_LEFT, 0, FONT_OPTION_NORMAL, HORIZONTAL_ALIGN_RIGHT);
 }
 
 static void draw_interval_summary(uint8_t x, uint8_t y) {
 	uint16_t text = MESSAGE_1_SECOND;
 	if (rtc_get_refresh_interval() == RTC_INTERVAL_MINUTE)
 		text = MESSAGE_1_MINUTE;
-	mlcd_draw_text(I18N_TRANSLATE(text), x, y, MLCD_XRES-SUMMARY_X-MARGIN_LEFT, NULL, FONT_OPTION_NORMAL, HORIZONTAL_ALIGN_RIGHT);
+	mlcd_draw_text(I18N_TRANSLATE(text), x, y, MLCD_XRES-SUMMARY_X-MARGIN_LEFT, 0, FONT_OPTION_NORMAL, HORIZONTAL_ALIGN_RIGHT);
 }
 
 static void draw_steps(uint8_t x, uint8_t y) {
@@ -195,7 +195,7 @@ static void draw_steps(uint8_t x, uint8_t y) {
 		count[i] = '0' + s % 10;
 		s /= 10;
 	}
-	mlcd_draw_text(count, x-42, y, MLCD_XRES-SUMMARY_X-MARGIN_LEFT, NULL, FONT_OPTION_NORMAL, HORIZONTAL_ALIGN_RIGHT);
+	mlcd_draw_text(count, x-42, y, MLCD_XRES-SUMMARY_X-MARGIN_LEFT, 0, FONT_OPTION_NORMAL, HORIZONTAL_ALIGN_RIGHT);
 	bool on = get_settings(CONFIG_PEDOMETER);
 	draw_switch(x+MENU_SWITCH_PADDING_X, y, on);
 }

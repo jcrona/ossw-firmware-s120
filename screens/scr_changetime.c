@@ -26,7 +26,7 @@ static void scr_changetime_draw_minutes() {
 }
 
 static void scr_changetime_draw_all() {
-	  mlcd_draw_text(I18N_TRANSLATE(MESSAGE_SET_TIME), 19, 13, NULL, NULL, FONT_OPTION_BIG, 0);
+	  mlcd_draw_text(I18N_TRANSLATE(MESSAGE_SET_TIME), 19, 13, 0, 0, FONT_OPTION_BIG, 0);
 	  fillRectangle(0, 50, MLCD_XRES, 2, DRAW_WHITE);
 	
 	  fillRectangle(69, TIME_Y_POS + 22, 5, 5, DRAW_WHITE);

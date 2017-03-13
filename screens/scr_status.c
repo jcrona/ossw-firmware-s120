@@ -69,7 +69,7 @@ static void scr_status_draw_time_on_charge() {
 		char days_str[20];
 		snprintf(days_str, 20, I18N_TRANSLATE(MESSAGE_DAYS_ON_BATTERY), days, hours%24);
 		fillRectangle(0, 88, MLCD_XRES, 16, DRAW_BLACK);
-		mlcd_draw_text(days_str, 0, 88, MLCD_XRES, NULL, FONT, HORIZONTAL_ALIGN_CENTER);
+		mlcd_draw_text(days_str, 0, 88, MLCD_XRES, 0, FONT, HORIZONTAL_ALIGN_CENTER);
 	}
 
 	int32_t percent = battery_get_level();
@@ -96,7 +96,7 @@ static void scr_status_draw_screen() {
 		scr_status_draw_battery_status();
 		scr_status_draw_time_on_charge();
 
-		mlcd_draw_text(ossw_mac_address(), 0, 114, MLCD_XRES, NULL, FONT, HORIZONTAL_ALIGN_CENTER);
+		mlcd_draw_text(ossw_mac_address(), 0, 114, MLCD_XRES, 0, FONT, HORIZONTAL_ALIGN_CENTER);
 	
 		// Check hardware ID, how compatible with other SoftDevices
 		// ex. 004D is for 2nd rev, WLCSP, 256kB/16kB 
@@ -108,8 +108,8 @@ static void scr_status_draw_screen() {
 				id[9-i] = hex_str[hwid & 0x000F];
 				hwid = hwid >> 4;
 		}
-		mlcd_draw_text(id, 0, 132, MLCD_XRES, NULL, FONT, HORIZONTAL_ALIGN_CENTER);
-  	mlcd_draw_text(ossw_firmware_version(), 0, 150, MLCD_XRES, NULL, FONT, HORIZONTAL_ALIGN_CENTER);
+		mlcd_draw_text(id, 0, 132, MLCD_XRES, 0, FONT, HORIZONTAL_ALIGN_CENTER);
+  	mlcd_draw_text(ossw_firmware_version(), 0, 150, MLCD_XRES, 0, FONT, HORIZONTAL_ALIGN_CENTER);
 		
 		scr_controls_draw(&controls_definition);
 }

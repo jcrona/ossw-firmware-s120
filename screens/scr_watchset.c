@@ -68,8 +68,8 @@ static void clear_subscreen_data() {
 }
 
 static void clean_before_exit() {
-		watchset_id = NULL;
-		ble_peripheral_set_watch_set_id(NULL);
+		watchset_id = 0;
+		ble_peripheral_set_watch_set_id(0);
 	
 		SPIFFS_close(&fs, watchset_fd); 
 
@@ -160,10 +160,10 @@ static uint32_t pass_argument_data_source_get_property_value(uint32_t value, uin
 
 static uint32_t external_data_source_get_property_value(uint32_t property_id, uint8_t expected_range, uint8_t* data, bool* has_changed) {	  
 	  if (external_properties_data == NULL) {
-			  return NULL;
+			  return 0;
 		}
 		if (property_id >= external_properties_no) {
-			  return NULL;
+			  return 0;
 		}
 		uint8_t type = external_properties_data[property_id*WATCH_SET_EXT_PROP_DESCRIPTOR_SIZE];
 		uint8_t range = external_properties_data[property_id*WATCH_SET_EXT_PROP_DESCRIPTOR_SIZE+1];
@@ -207,10 +207,10 @@ static uint32_t external_data_source_get_property_value(uint32_t property_id, ui
 				}
 			  case WATCH_SET_EXT_PROP_TYPE_STRING: {
 						ext_ram_read_text(ext_prop_offset + offset, data, range, has_changed);
-		        return NULL;
+		        return 0;
 				}
 			  default:
-				    return NULL;
+				    return 0;
 		}
 }
 

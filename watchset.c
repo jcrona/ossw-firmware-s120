@@ -290,7 +290,7 @@ uint32_t watchset_internal_data_source_get_value(uint32_t data_source_id, uint8_
 		uint16_t index = (data_source_id>>8)&0xFFFF;
 		if (data_source_id == 19 || data_source_id == 20) {
 				strcpy((char*)data, (char*)internal_data_source_handles[data_id](index));
-				return NULL;
+				return 0;
 		} else {
 				uint32_t multiplier = simple_pow(10, expected_range&0xF);
 				return multiplier * internal_data_source_handles[data_id](index);

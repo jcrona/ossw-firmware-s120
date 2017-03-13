@@ -24,7 +24,7 @@ void notification_timeout_event(void * p_event_data, uint16_t event_size) {
 
 static void notifications_alert_timeout_handler(void * p_context) {
     UNUSED_PARAMETER(p_context);
-		uint32_t err_code = app_sched_event_put(NULL, NULL, notification_timeout_event);
+		uint32_t err_code = app_sched_event_put(NULL, 0, notification_timeout_event);
 		APP_ERROR_CHECK(err_code);
 }
 

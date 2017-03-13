@@ -74,7 +74,7 @@ void mlcd_off_event(void * p_event_data, uint16_t event_size)
 
 void mlcd_bl_timeout_handler(void * p_context) {
 	UNUSED_PARAMETER(p_context);
-	uint32_t err_code = app_sched_event_put(NULL, NULL, mlcd_off_event);
+	uint32_t err_code = app_sched_event_put(NULL, 0, mlcd_off_event);
 	APP_ERROR_CHECK(err_code);
 }
 

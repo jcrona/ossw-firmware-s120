@@ -54,7 +54,7 @@ static void scr_alarm_draw_days() {
 }
 
 static void scr_changetime_draw_all() {
-	  mlcd_draw_text(I18N_TRANSLATE(MESSAGE_ALARM_CLOCK), 10, 5, 80, NULL, FONT_OPTION_BIG, HORIZONTAL_ALIGN_LEFT);
+	  mlcd_draw_text(I18N_TRANSLATE(MESSAGE_ALARM_CLOCK), 10, 5, 80, 0, FONT_OPTION_BIG, HORIZONTAL_ALIGN_LEFT);
 
 	  fillRectangle(69, TIME_Y_POS + 24, 5, 5, DRAW_WHITE);
 	  fillRectangle(69, TIME_Y_POS + 10, 5, 5, DRAW_WHITE);

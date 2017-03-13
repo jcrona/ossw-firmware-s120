@@ -28,7 +28,7 @@ static uint8_t sizeOfMenu = 0;
 
 static void draw_option(const MENU_OPTION *menu_list, uint_fast8_t item) {
 	uint_fast8_t yPos = HEADER_HEIGHT + 4 + MENU_ITEM_HEIGHT * (item % MENU_ITEMS_PER_PAGE);
-	mlcd_draw_text(I18N_TRANSLATE(menu_list[item].message_key), MARGIN_LEFT, yPos, MLCD_XRES-MARGIN_LEFT, NULL, FONT_OPTION_NORMAL, HORIZONTAL_ALIGN_LEFT);
+	mlcd_draw_text(I18N_TRANSLATE(menu_list[item].message_key), MARGIN_LEFT, yPos, MLCD_XRES-MARGIN_LEFT, 0, FONT_OPTION_NORMAL, HORIZONTAL_ALIGN_LEFT);
 	void (*s_drawer)(uint8_t x, uint8_t y) = menu_list[item].summary_drawer;
 	uint8_t sel_width = MLCD_XRES;
 	if (s_drawer != NULL) {

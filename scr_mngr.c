@@ -250,7 +250,7 @@ void scr_mngr_show_screen(uint16_t screen_id) {
 		if (screen_id == current_screen)
 				return;
 	  switch_to_screen = screen_id;
-	  switch_to_screen_param = NULL;
+	  switch_to_screen_param = 0;
 }
 
 void scr_mngr_draw_notification_bar() {
@@ -275,7 +275,7 @@ void scr_mngr_draw_screen(void) {
 				} else if (scr_alert_notification_state == SCR_ALERT_NOTIFICATION_STATE_SHOW) {
 						scr_mngr_handle_event_internal(SCR_ALERT_NOTIFICATION, SCR_EVENT_REFRESH_SCREEN, (uint32_t)&draw_ctx);
 				} else if (scr_alert_notification_state == SCR_ALERT_NOTIFICATION_STATE_CLOSE) {
-						scr_mngr_handle_event_internal(SCR_ALERT_NOTIFICATION, SCR_EVENT_DESTROY_SCREEN, NULL);
+						scr_mngr_handle_event_internal(SCR_ALERT_NOTIFICATION, SCR_EVENT_DESTROY_SCREEN, 0);
 						scr_alert_notification_state = SCR_ALERT_NOTIFICATION_STATE_NONE;
 					  // draw sceen
 						mlcd_fb_clear();
@@ -283,7 +283,7 @@ void scr_mngr_draw_screen(void) {
 				}
 		} else if (!modal_dialog && scr_notifications_state != SCR_NOTIFICATIONS_STATE_NONE) {
 				if (scr_notifications_state == SCR_NOTIFICATIONS_STATE_INIT) {
-						scr_mngr_handle_event_internal(SCR_NOTIFICATIONS, SCR_EVENT_INIT_SCREEN, NULL);
+						scr_mngr_handle_event_internal(SCR_NOTIFICATIONS, SCR_EVENT_INIT_SCREEN, 0);
 					  // draw alert notification screen
 						mlcd_fb_clear();
 						scr_mngr_handle_event_internal(SCR_NOTIFICATIONS, SCR_EVENT_DRAW_SCREEN, (uint32_t)&draw_ctx);
@@ -295,7 +295,7 @@ void scr_mngr_draw_screen(void) {
 						scr_mngr_handle_event_internal(SCR_NOTIFICATIONS, SCR_EVENT_DRAW_SCREEN, (uint32_t)&draw_ctx);
 						scr_notifications_state = SCR_NOTIFICATIONS_STATE_SHOW;
 				} else if (scr_notifications_state == SCR_NOTIFICATIONS_STATE_CLOSE) {
-						scr_mngr_handle_event_internal(SCR_NOTIFICATIONS, SCR_EVENT_DESTROY_SCREEN, NULL);
+						scr_mngr_handle_event_internal(SCR_NOTIFICATIONS, SCR_EVENT_DESTROY_SCREEN, 0);
 						scr_notifications_state = SCR_NOTIFICATIONS_STATE_NONE;
 					  // draw sceen
 						mlcd_fb_clear();
@@ -309,7 +309,7 @@ void scr_mngr_draw_screen(void) {
 						current_screen = SCR_NOT_SET;
 						do {
 							// release memory used by old screen
-							scr_mngr_handle_event_internal(old_screen, SCR_EVENT_DESTROY_SCREEN, NULL);
+							scr_mngr_handle_event_internal(old_screen, SCR_EVENT_DESTROY_SCREEN, 0);
 							new_screen = switch_to_screen;
 							// initilize new screen
 							scr_mngr_handle_event_internal(switch_to_screen, SCR_EVENT_INIT_SCREEN, switch_to_screen_param);

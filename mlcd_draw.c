@@ -264,10 +264,10 @@ uint_fast8_t mlcd_calc_text_height(const char *text, uint_fast8_t start_x, uint_
 		
 		uint8_t x = start_x;
 		uint8_t y = start_y;
-	  if (width == NULL) {
+		if (width == 0) {
 			  width = MLCD_XRES - x;
 		}
-	  if (height == NULL) {
+		if (height == 0) {
 			  height = MLCD_YRES - y;
 		}
 	  const FONT_INFO* font = mlcd_resolve_font(font_type);
@@ -321,10 +321,10 @@ uint_fast8_t mlcd_draw_text(const char *text, uint_fast8_t start_x, uint_fast8_t
 		
 		uint8_t x = start_x;
 		uint8_t y = start_y;
-	  if (width == NULL) {
+		if (width == 0) {
 			  width = MLCD_XRES - x;
 		}
-	  if (height == NULL) {
+		if (height == 0) {
 			  height = MLCD_YRES - y;
 		}
 		uint8_t max_y = y + height;

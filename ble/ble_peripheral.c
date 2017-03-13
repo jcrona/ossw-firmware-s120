@@ -94,7 +94,7 @@ static void ossw_data_handler(ble_ossw_t * p_ossw, uint8_t * p_data, uint16_t le
 	
 	 switch(p_data[0]) {	
 		 case 0x01:
-					scr_mngr_handle_event(SCR_EVENT_APP_CONNECTION_CONFIRMED, NULL);
+					scr_mngr_handle_event(SCR_EVENT_APP_CONNECTION_CONFIRMED, 0);
 					break;
 		 case 0x10:
 			    // set current time
@@ -407,7 +407,7 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
 
         case BLE_GAP_EVT_DISCONNECTED:
             m_conn_handle = BLE_CONN_HANDLE_INVALID;
-						err_code = app_sched_event_put(NULL, NULL, disconnection_alert_event);
+						err_code = app_sched_event_put(NULL, 0, disconnection_alert_event);
 						APP_ERROR_CHECK(err_code);
             break;
 

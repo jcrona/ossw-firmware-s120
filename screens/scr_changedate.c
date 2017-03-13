@@ -38,7 +38,7 @@ static void scr_changedate_draw_year() {
 }
 
 static void scr_changedate_draw_all() {
-	  mlcd_draw_text(I18N_TRANSLATE(MESSAGE_SET_DATE), 20, 13, NULL, NULL, FONT_OPTION_BIG, 0);
+	  mlcd_draw_text(I18N_TRANSLATE(MESSAGE_SET_DATE), 20, 13, 0, 0, FONT_OPTION_BIG, 0);
 	  fillRectangle(0, 50, MLCD_XRES, 2, DRAW_WHITE);
 	
 	  fillRectangle(35, DATE_Y_POS + DATE_HEIGHT - 4, 4, 4, DRAW_WHITE);

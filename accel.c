@@ -292,7 +292,7 @@ static void accel_int_handler(void *p_event_data, uint16_t event_size) {
 }
 
 static void accel_event_handler(nrf_drv_gpiote_pin_t pin, nrf_gpiote_polarity_t action) {
-	uint32_t err_code = app_sched_event_put(NULL, NULL, accel_int_handler);
+	uint32_t err_code = app_sched_event_put(NULL, 0, accel_int_handler);
 	APP_ERROR_CHECK(err_code);
 }
 

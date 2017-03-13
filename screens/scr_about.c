@@ -21,10 +21,10 @@ static void scr_about_refresh_screen() {
 }
 
 static void scr_about_draw_screen() {
-  	mlcd_draw_text(I18N_TRANSLATE(MESSAGE_ABOUT), 0, 30, MLCD_XRES, NULL, FONT_OPTION_BIG, HORIZONTAL_ALIGN_CENTER);
+  	mlcd_draw_text(I18N_TRANSLATE(MESSAGE_ABOUT), 0, 30, MLCD_XRES, 0, FONT_OPTION_BIG, HORIZONTAL_ALIGN_CENTER);
 	
-  	mlcd_draw_text(ossw_mac_address(), 0, 90, MLCD_XRES, NULL, FONT_NORMAL_BOLD, HORIZONTAL_ALIGN_CENTER);
-  	mlcd_draw_text(ossw_firmware_version(), 0, 120, MLCD_XRES, NULL, FONT_NORMAL_BOLD, HORIZONTAL_ALIGN_CENTER);
+  	mlcd_draw_text(ossw_mac_address(), 0, 90, MLCD_XRES, 0, FONT_NORMAL_BOLD, HORIZONTAL_ALIGN_CENTER);
+  	mlcd_draw_text(ossw_firmware_version(), 0, 120, MLCD_XRES, 0, FONT_NORMAL_BOLD, HORIZONTAL_ALIGN_CENTER);
 }
 
 bool scr_about_handle_event(uint32_t event_type, uint32_t event_param) {
