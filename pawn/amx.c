@@ -32,6 +32,7 @@
 #include <stddef.h>     /* for wchar_t */
 #include <stdlib.h>     /* for getenv() */
 #include <string.h>
+#include <wchar.h>
 #include "osdefs.h"
 #if defined __LINUX__ || defined __FreeBSD__ || defined __OpenBSD__
   #include <sclinux.h>
