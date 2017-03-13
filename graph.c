@@ -39,7 +39,7 @@ void pixel(uint_fast8_t x, uint_fast8_t y, uint8_t mode) {
     uint16_t ext_ram_address = EXT_RAM_DATA_FRAME_BUFFER + (x >> 3) + LINE_OFFSET(y);
     uint8_t val = 0;
     ext_ram_read_data(ext_ram_address, &val, 1);
-		DRAW_BYTE(val, 1 << (7 - x & 0x7), mode);
+		DRAW_BYTE(val, 1 << (7 - (x & 0x7)), mode);
 		ext_ram_write_data(ext_ram_address, &val, 1);
 }
 

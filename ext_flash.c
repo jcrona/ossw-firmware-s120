@@ -35,7 +35,7 @@ bool ext_flash_write_enable() {
 bool ext_flash_wait_until_ready() {
     uint8_t status = 0;
     ext_flash_read_status(&status);
-    if (status & 0x01 == 0) {
+    if ((status & 0x01) == 0) {
          return true;
     }
     // first wait 10us, second 100us, third and following 1000us

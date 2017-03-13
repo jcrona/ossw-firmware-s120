@@ -161,7 +161,7 @@ static void scr_timer_roll_saved() {
 		scr_draw_timer_1();
 		scr_draw_timer_2();
 	} else {
-		uint8_t saved_index = (timer_mode >> 4) + 1 & 3;
+		uint8_t saved_index = ((timer_mode >> 4) + 1) & 3;
 		scr_load_saved_timer(saved_index);
 		scr_mark_timer();
 		// store the index

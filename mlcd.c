@@ -50,7 +50,7 @@ static uint8_t bit_reverse(uint8_t byte) {
 }
 
 void mlcd_backlight_blink_toggle() {
-	uint8_t t = bl_blink_counter & 1 ^ bl_mode & MLCD_BL_LONG;
+	uint8_t t = (bl_blink_counter & 1) ^ (bl_mode & MLCD_BL_LONG);
 	if (t)
 		nrf_gpio_pin_set(LCD_BACKLIGHT);
 	else
@@ -194,7 +194,7 @@ void mlcd_backlight_toggle(void)
 void mlcd_backlight_blink(int32_t timeout, uint8_t count) {
 	if (count == 0)
 		return;
-	bl_blink_counter = (count << 1) - 1 | MLCD_BL_BLINK;
+	bl_blink_counter = ((count << 1) - 1) | MLCD_BL_BLINK;
 	mlcd_backlight_blink_toggle();
 	app_timer_start(mlcd_bl_timer_id, APP_TIMER_TICKS(timeout, APP_TIMER_PRESCALER), NULL);
 }
