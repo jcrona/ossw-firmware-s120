@@ -88,11 +88,15 @@ static void scr_menu_init(const MENU_OPTION *menu_list) {
 	sizeOfMenu = 0;
 
 	/* The menu must end with {0, NULL, NULL, NULL} */
-	for (uint8_t i = 0; i < 256; i++) {
+	for (uint8_t i = 0;; i++) {
 		if (menu_list[i].message_key == 0 &&
 			menu_list[i].select_handler == NULL &&
 			menu_list[i].long_select_handler == NULL &&
 			menu_list[i].summary_drawer == NULL) {
+			break;
+		}
+
+		if (i == 255) {
 			break;
 		}
 
