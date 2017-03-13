@@ -11,5 +11,5 @@ The goal of this branch is to be able to build the **ossw-firmware** using **GCC
 To do so, you need:
    - the nRF51 SDK from Nordic **version 9.0.0** (path to it in the *Makefile*) -> https://developer.nordicsemi.com/nRF5_SDK/
    - the nrfutil python tool **version 0.5.2**-> https://github.com/NordicSemiconductor/pc-nrfutil
-   - the Gnu GCC toolchain for ARM Cortex-M0 (path also in the *Makefile*, **gcc-arm-none-eabi-4_9-2014q4** is known to produce a code that fits in the watch, but you can experiment with different versions) -> https://developer.arm.com/open-source/gnu-toolchain/gnu-rm
+   - the Gnu GCC toolchain for ARM Cortex-M0 (path also in the *Makefile*, **gcc-arm-none-eabi-4_9-2014q4** is known to produce a code that fits in the watch, but you can experiment with different versions) -> https://developer.arm.com/open-source/gnu-toolchain/gnu-rm (or https://launchpad.net/gcc-arm-embedded/+download for older releases)
 
