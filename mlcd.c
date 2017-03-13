@@ -222,13 +222,15 @@ void mlcd_fb_flush(void) {
 }
 
 void mlcd_fb_flush_with_param(bool force_colors) {
+	uint8_t command[3];
+
 		if (toggle_colors) {
 				colors_inverted = !colors_inverted;
 				mlcd_fb_invalidate_all();
 				toggle_colors = false;
 		}
 	
-    uint8_t command = MLCD_WR | vcom;
+	command[0] = MLCD_WR | vcom;
     uint8_t dummy = 0;
 	  uint8_t line_address;
 	  uint16_t ext_ram_line_address = 0;
@@ -249,7 +251,7 @@ void mlcd_fb_flush_with_param(bool force_colors) {
     /* enable slave (slave select active HIGH) */
     nrf_gpio_pin_set(MLCD_SPI_SS);
   
-    spi_master_tx_data_no_cs(MLCD_SPI, &command, 1);
+    spi_master_tx_data_no_cs(MLCD_SPI, command, 1);
   
     for (uint8_t line_no = 0; line_no < MLCD_YRES; line_no++) {
 			
@@ -258,10 +260,10 @@ void mlcd_fb_flush_with_param(bool force_colors) {
             line_address = bit_reverse(MLCD_YRES - line_no);
             spi_master_tx_data_no_cs(MLCD_SPI, &line_address, 1);
 					
-						/* enable ext ram */
-	          uint8_t command[] = {EXT_RAM_READ_COMMAND, 0xFF, 0xFF};
-            command[1] = ext_ram_line_address >> 8 & 0xFF;
-            command[2] = ext_ram_line_address & 0xFF;
+			/* enable ext ram */
+			command[0] = EXT_RAM_READ_COMMAND;
+			command[1] = ext_ram_line_address >> 8 & 0xFF;
+			command[2] = ext_ram_line_address & 0xFF;
 						
 						nrf_gpio_pin_clear(EXT_RAM_SPI_SS);
   					spi_master_tx_data_no_cs(EXT_RAM_SPI, command, 3);

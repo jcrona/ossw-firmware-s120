@@ -314,10 +314,10 @@ bool watchset_is_watch_face(void) {
 		return watch_face;
 }
 
-static void watchset_open(char* file_name, bool watch_face) {
+static void watchset_open(char* file_name, bool watch_f) {
 		spiffs_file fd = SPIFFS_open(&fs, file_name, SPIFFS_RDONLY, 0);
 		if (fd >= 0) {
-				scr_mngr_show_screen_with_param(SCR_WATCH_SET, watch_face<<28 | 2<<24 | fd);
+				scr_mngr_show_screen_with_param(SCR_WATCH_SET, watch_f<<28 | 2<<24 | fd);
 		} else {
 				scr_mngr_show_screen(SCR_WATCHFACE);
 		}
