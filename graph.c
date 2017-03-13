@@ -208,7 +208,7 @@ void fillConvex(int_fast8_t size, int16_t x[], int16_t y[], uint8_t mode) {
 		int8_t last = size - 1;
 		int16_t dir = SIGN(y[0] - y[last]);
 		int16_t newDir;
-		uint8_t l1, l2, r1, r2;
+		uint8_t l1 = 0, l2 = 0, r1 = 0, r2 = 0;
 		for (int_fast8_t i = 0; i < last; i++) {
 				newDir = SIGN(y[i+1] - y[i]);
 				if (dir == newDir)
