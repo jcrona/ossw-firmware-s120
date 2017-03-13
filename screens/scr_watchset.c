@@ -981,7 +981,8 @@ void scr_watch_set_parse_choose_actions(uint8_t** data) {
 						*data+=2;
 						scr_watch_set_parse_actions(data);
 				} else {
-						int size = *((*data)++)<<8 | *((*data)++);
+						int size = *((*data)++)<<8;
+						size |= *((*data)++);
 						*data+=size;
 				}
 		}
@@ -1010,10 +1011,12 @@ static void scr_watch_set_parse_actions(uint8_t** data) {
 				if (action_id == WATCH_SET_FUNC_CHOOSE) {
 						scr_watch_set_parse_choose_actions(data);
 				} else if (action_id == WATCH_SET_FUNC_EXTENSION) {
-						uint16_t param = *((*data)++)<<8 | *((*data)++);
+						uint16_t param = *((*data)++)<<8;
+						param |= *((*data)++);
 						scr_watch_set_invoke_external_function(param);
 				} else if (action_id == WATCH_SET_FUNC_CHANGE_SCREEN) {
-						uint16_t param = *((*data)++)<<8 | *((*data)++);
+						uint16_t param = *((*data)++)<<8;
+						param |= *((*data)++);
 						show_screen_param = param&0xFF;
 				} else if (action_id == WATCH_SET_FUNC_SET_TIME) {
 						time_t t;
