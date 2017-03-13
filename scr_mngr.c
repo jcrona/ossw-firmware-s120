@@ -144,7 +144,7 @@ bool scr_mngr_default_handle_event(uint32_t event_type, uint32_t event_param) {
 		return false;
 }
 
-void static scr_mngr_handle_event_internal(uint16_t screen_id, uint32_t event_type, uint32_t event_param) {
+static void scr_mngr_handle_event_internal(uint16_t screen_id, uint32_t event_type, uint32_t event_param) {
 		bool handled = false;
 	  switch (screen_id) {
 			  case SCR_CHOOSE_MODE:
