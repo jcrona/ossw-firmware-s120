@@ -99,9 +99,10 @@
 
 #define DATA_SOURCE_SENSOR_HR 0
 
+#define WATCH_SET_OPERATION_NONE	 			0x0
 #define WATCH_SET_OPERATION_NEXT_WATCH_FACE 			0x1
 #define WATCH_SET_OPERATION_OPEN_APPLICATION			0x2
-#define WATCH_SET_OPERATION_OPEN_UTILITY					0x3
+#define WATCH_SET_OPERATION_OPEN_UTILITY			0x3
 
 void watchset_set_default_watch_face(struct spiffs_dirent* entry);
 

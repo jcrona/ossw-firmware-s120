@@ -14,7 +14,7 @@
 #include "utils.h"
 
 bool watch_face = false;
-uint8_t operation = 0;
+uint8_t operation = WATCH_SET_OPERATION_NONE;
 uint32_t operation_param = 0;
 
 static uint32_t (* const internal_data_source_handles[])() = {
@@ -402,12 +402,12 @@ void watchset_async_operation(uint8_t op, uint32_t param) {
 }
 
 void watchset_process_async_operation(void) {
-		if (operation != NULL) {
+		if (operation != WATCH_SET_OPERATION_NONE) {
 				if (operation == WATCH_SET_OPERATION_OPEN_APPLICATION || operation == WATCH_SET_OPERATION_OPEN_UTILITY) {
 						watchset_open_other();
 				} else if (operation == WATCH_SET_OPERATION_NEXT_WATCH_FACE) {
 						watchset_next_watch_face();
 				}
-				operation = NULL;
+				operation = WATCH_SET_OPERATION_NONE;
 		}
 }
