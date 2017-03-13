@@ -11,6 +11,7 @@
 #include "config.h"
 #include "ble_gap.h"
 #include "notifications.h"
+#include "utils.h"
 
 bool watch_face = false;
 uint8_t operation = 0;
@@ -284,14 +285,6 @@ void watchset_invoke_internal_function(uint8_t function_id, uint32_t param) {
 		}
 }
 
-static uint32_t pow(uint32_t x, uint8_t n) {
-	  uint32_t result = 1;
-	  for(uint32_t i = 0; i < n; i++) {
-			  result *= x;
-		}
-		return result;
-}
-
 uint32_t watchset_internal_data_source_get_value(uint32_t data_source_id, uint8_t expected_range, uint8_t* data, bool* has_changed) {
 		uint8_t data_id = data_source_id&0xFF;
 		uint16_t index = (data_source_id>>8)&0xFFFF;
@@ -299,13 +292,13 @@ uint32_t watchset_internal_data_source_get_value(uint32_t data_source_id, uint8_
 				strcpy((char*)data, (char*)internal_data_source_handles[data_id](index));
 				return NULL;
 		} else {
-				uint32_t multiplier = pow(10, expected_range&0xF);
+				uint32_t multiplier = simple_pow(10, expected_range&0xF);
 				return multiplier * internal_data_source_handles[data_id](index);
 		}
 }
 
 uint32_t watchset_sensor_data_source_get_value(uint32_t data_source_id, uint8_t expected_range) {
-		uint32_t multiplier = pow(10, expected_range&0xF);
+		uint32_t multiplier = simple_pow(10, expected_range&0xF);
 	  return multiplier * sensor_data_source_handles[data_source_id]();
 }
 

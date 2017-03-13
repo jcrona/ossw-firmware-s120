@@ -16,6 +16,7 @@
 #include "../fs.h"
 #include "../watchset.h"
 #include "../config.h"
+#include "../utils.h"
 #include <stdlib.h> 
 
 struct model_property {
@@ -139,14 +140,6 @@ static inline void ws_data_skip(uint32_t size) {
 		ws_data_ptr += size;
 }
 
-static uint32_t pow(uint32_t x, uint8_t n) {
-	  uint32_t result = 1;
-	  for(uint32_t i = 0; i < n; i++) {
-			  result *= x;
-		}
-		return result;
-}
-
 static uint8_t calc_ext_property_size(uint8_t type, uint8_t range) {
 	  switch(type) {
 			  case WATCH_SET_EXT_PROP_TYPE_NUMBER:
@@ -204,9 +197,9 @@ static uint32_t external_data_source_get_property_value(uint32_t property_id, ui
 						uint8_t decimal_size = range&0x1F;
 						uint8_t expected_decimal_size = expected_range&0xF;
 						if (expected_decimal_size > decimal_size) {
-							  return result * pow(10, expected_decimal_size - decimal_size);
+							  return result * simple_pow(10, expected_decimal_size - decimal_size);
 						} else if (expected_decimal_size < decimal_size) {
-							  uint32_t divider = pow(10, decimal_size - expected_decimal_size);
+							  uint32_t divider = simple_pow(10, decimal_size - expected_decimal_size);
 							  // divide and round half up
 							  return (result + (divider>>1)) / divider;
 						}
